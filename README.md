@@ -141,6 +141,26 @@ xdg-open index.html    # Linux
 
 …or serve the folder with any static file server and visit it on your phone.
 
+## Testing
+
+A pure-Node test suite lives in [`tabla-tests/`](tabla-tests/). It runs against
+the **shipped** `index.html` — `extract.js` pulls the `<script>` block out into a
+generated `app2.js` (DOM and timers stubbed) so the tests validate exactly what
+ships, with no separate copy of the source to drift. **Node 18+, no `npm install`.**
+
+```
+node tabla-tests/run-all.js
+```
+
+One line per suite plus an overall verdict; non-zero exit on failure (CI-friendly).
+Coverage: engine rules (40 assertions), 36 full games across all three variants,
+history/branching (195 checks), the history modal / rewind / replay UI, the
+Гюлбара doubles cascade + hand-off, flipped-board (Black-as-human) perspective,
+guess-mode scoring, and the Auto self-play planner. See
+[`tabla-tests/README.md`](tabla-tests/README.md) for a per-suite breakdown.
+
+The generated `tabla-tests/app2.js` is git-ignored.
+
 ## License
 
 No license specified yet — add one before distributing.
