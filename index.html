@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tabla">
+<meta name="theme-color" content="#0e1512">
+<title>Tabla Trainer — Табла · Гюлбара · Тапа</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230e1512'/%3E%3Cpolygon points='40,30 70,30 55,95' fill='%23c9a26d'/%3E%3Cpolygon points='110,150 140,150 125,85' fill='%235fb9a7'/%3E%3Ccircle cx='125' cy='52' r='17' fill='%23ecdfbe'/%3E%3Ccircle cx='55' cy='128' r='17' fill='%23283330' stroke='%235fb9a7' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230e1512'/%3E%3Cpolygon points='40,30 70,30 55,95' fill='%23c9a26d'/%3E%3Cpolygon points='110,150 140,150 125,85' fill='%235fb9a7'/%3E%3Ccircle cx='125' cy='52' r='17' fill='%23ecdfbe'/%3E%3Ccircle cx='55' cy='128' r='17' fill='%23283330' stroke='%235fb9a7' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0e1512;--bg2:#0a100d;--panel:#141e19;--panel2:#18241e;
+    --line:rgba(201,162,109,.20);--gold:#c9a26d;--ivory:#ecdfbe;--onyx:#283330;
+    --amber:#e2a857;--teal:#5fb9a7;--red:#e8714e;--text:#e9efe9;--muted:#8ba095;
+    --tnum:"tnum" 1;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    background:radial-gradient(120% 80% at 50% -10%,#16211c 0%,var(--bg) 45%,var(--bg2) 100%);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+    font-feature-settings:var(--tnum);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    padding:max(10px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right))
+            max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+    overscroll-behavior:none;touch-action:manipulation;
+  }
+  .wrap{max-width:480px;margin:0 auto;}
+  header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:2px 2px 8px;}
+  h1{font-size:19px;letter-spacing:.34em;font-weight:600;margin:0;color:var(--text);text-indent:.34em;}
+  .sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;}
+  .seg{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:13px;padding:4px;margin:0 2px 11px;}
+  .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;letter-spacing:.03em;padding:9px 6px;border-radius:10px;cursor:pointer;transition:.15s;}
+  .seg button.on{background:linear-gradient(180deg,#e7b063,#d6993f);color:#241a08;box-shadow:0 4px 12px -6px rgba(226,168,87,.8);}
+  .seg button:active{transform:translateY(1px);}
+  .status{display:flex;align-items:center;gap:9px;min-height:24px;margin:0 2px 9px;font-size:13px;color:var(--muted);letter-spacing:.01em;}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 0 3px rgba(255,255,255,.04);}
+  .dot.w{background:var(--amber);}.dot.k{background:var(--teal);}
+  .status b{color:var(--text);font-weight:600;}
+  .boardwrap{position:relative;border-radius:18px;overflow:hidden;
+    box-shadow:0 18px 40px -20px rgba(0,0,0,.8),inset 0 0 0 1px var(--line);}
+  svg#board{display:block;width:100%;height:auto;}
+  .controls{display:flex;align-items:center;gap:6px;margin:11px 1px 0;flex-wrap:wrap;}
+  .btn{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.03);
+    color:var(--text);font:inherit;font-size:12.5px;font-weight:550;letter-spacing:.01em;
+    padding:8px 11px;border-radius:11px;cursor:pointer;transition:.15s;user-select:none;}
+  .btn:active{transform:translateY(1px);background:rgba(255,255,255,.07);}
+  .btn:disabled{opacity:.36;pointer-events:none;}
+  .btn.primary{background:linear-gradient(180deg,#e7b063,#d6993f);color:#241a08;border-color:transparent;box-shadow:0 6px 16px -8px rgba(226,168,87,.8);}
+  .spacer{flex:1;}
+  .tog{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;}
+  .tog input{position:absolute;opacity:0;width:0;height:0;}
+  .sw{width:36px;height:20px;border-radius:99px;background:rgba(255,255,255,.10);position:relative;transition:.18s;flex:none;border:1px solid var(--line);}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#cdd6cf;transition:.18s;}
+  .tog input:checked + .sw{background:linear-gradient(180deg,#5fb9a7,#3f9d8b);}
+  .tog input:checked + .sw::after{transform:translateX(16px);background:#06120f;}
+  .spd input[type=range]{position:static;opacity:1;width:74px;height:18px;accent-color:#5fb9a7;cursor:pointer;}
+  .spd .spdval{min-width:30px;color:var(--gold);font-variant-numeric:tabular-nums;}
+  .hintline{margin:10px 2px 0;font-size:12.5px;color:var(--teal);letter-spacing:.01em;display:flex;gap:7px;align-items:baseline;}
+  .hintline .lab{color:var(--muted);text-transform:uppercase;font-size:10.5px;letter-spacing:.14em;flex:none;}
+  .hintline .mv{font-variant-numeric:tabular-nums;color:#bfe6db;font-weight:600;word-break:break-word;}
+  .panel{margin:12px 0 4px;display:grid;gap:9px;}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:12px 13px;}
+  .pips{display:flex;align-items:stretch;gap:10px;}
+  .pip{flex:1;text-align:center;}
+  .pip .who{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .pip .val{font-size:25px;font-weight:650;line-height:1.15;font-variant-numeric:tabular-nums;}
+  .pip.you .val{color:var(--amber);}.pip.ai .val{color:var(--teal);}
+  .pip .sub2{font-size:10.5px;color:var(--muted);}
+  .pipdiv{width:1px;background:var(--line);}
+  .lead{font-size:10px;color:var(--gold);letter-spacing:.06em;margin-top:1px;min-height:13px;}
+  .secthead{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px;padding:3px 0;}
+  .row .pt{color:var(--text);}.row .pt small{color:var(--muted);font-weight:500;}
+  .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;max-width:130px;}
+  .bar > i{display:block;height:100%;border-radius:99px;}
+  .pct{font-variant-numeric:tabular-nums;font-weight:650;min-width:42px;text-align:right;}
+  .red .pct{color:var(--red);}.red .bar>i{background:linear-gradient(90deg,#b6573a,var(--red));}
+  .teal .pct{color:var(--teal);}.teal .bar>i{background:linear-gradient(90deg,#3f9d8b,var(--teal));}
+  .none{color:var(--muted);font-size:12.5px;padding:2px 0;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+  @media(max-width:430px){.twocol{grid-template-columns:1fr;}}
+  .entry{display:flex;gap:9px;align-items:center;font-size:13px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);color:var(--muted);flex-wrap:wrap;}
+  .entry.flat{margin:0;border:0;padding:0;}
+  .entry b{color:var(--text);font-variant-numeric:tabular-nums;}
+  .chip{font-size:11px;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);}
+  footer{margin:14px 2px 4px;font-size:11px;color:var(--muted);line-height:1.5;opacity:.85;}
+  /* End overlay */
+  .overlay{position:absolute;inset:0;background:rgba(7,12,10,.74);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:5;}
+  .overlay.hidden,.hidden{display:none !important;}
+  .ovcard{text-align:center;padding:26px 30px;border-radius:18px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);box-shadow:0 20px 50px -20px #000;}
+  #ovmsg{font-size:22px;font-weight:650;margin-bottom:16px;letter-spacing:.01em;}
+  .ovbtns{display:flex;gap:8px;justify-content:center;}
+  /* Pair-roll dice pulse: grow/shrink twice, back to size (scales about each die's own centre) */
+  @keyframes dicepulse{0%{transform:scale(1)}20%{transform:scale(1.42)}40%{transform:scale(1)}60%{transform:scale(1.42)}80%{transform:scale(1)}100%{transform:scale(1)}}
+  .dpulse{transform-box:fill-box;transform-origin:center;animation:dicepulse 1.5s ease-in-out both;}
+  .pgcard{min-width:260px;max-width:340px;}
+  .pgtitle{font-size:19px;font-weight:650;margin-bottom:4px;}
+  .pgsub{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+  .pgcolors{display:flex;gap:12px;justify-content:center;}
+  .pgcolor{flex:1;cursor:pointer;border:1px solid var(--line);border-radius:14px;padding:16px 10px 13px;background:rgba(255,255,255,.03);transition:border-color .15s,transform .1s;}
+  .pgcolor:hover{border-color:var(--gold);transform:translateY(-2px);}
+  .pgdisc{width:44px;height:44px;border-radius:50%;margin:0 auto 9px;box-shadow:inset 0 -3px 6px rgba(0,0,0,.4),0 2px 5px rgba(0,0,0,.4);}
+  .pgdisc.w{background:radial-gradient(circle at 38% 32%,#fff6e6,#e8d4ad 70%,#c9b184);}
+  .pgdisc.k{background:radial-gradient(circle at 38% 32%,#5a6b66,#28332f 72%,#161d1b);}
+  .pgcolor .lbl{font-size:14px;font-weight:600;}
+  .pgroll{display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0 14px;}
+  .pgdie{width:60px;height:60px;}
+  .pgpair{display:flex;gap:8px;}
+  .pgpair .pgdie,.pgpair .pgempty{width:48px;height:48px;}
+  .pgempty{display:inline-flex;align-items:center;justify-content:center;border:2px dashed var(--gold);border-radius:11px;font-size:22px;color:var(--gold);background:rgba(201,162,109,.08);}
+  .pgtap{cursor:pointer;border-radius:13px;padding:5px;margin:-5px;transition:background .15s,transform .1s;}
+  .pgtap:hover{background:rgba(201,162,109,.12);transform:translateY(-2px);}
+  .pgtaphint{font-size:12px;color:var(--gold);font-weight:600;margin-top:2px;}
+  .pgvs{font-size:13px;color:var(--muted);font-weight:600;}
+  .pgwho{font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+  .pgcol{display:flex;flex-direction:column;align-items:center;}
+  .pgmsg{font-size:13px;color:var(--gold);min-height:18px;margin-bottom:6px;}
+  /* History modal */
+  .histmodal{position:absolute;inset:0;background:rgba(7,12,10,.92);backdrop-filter:blur(5px);display:flex;flex-direction:column;z-index:7;border-radius:18px;}
+  .histhead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--line);}
+  .histhead h2{font-size:15px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;margin:0;color:var(--text);}
+  .histbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .histrow{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid rgba(201,162,109,.08);font-size:12.5px;}
+  .histrow.mine{border-left:3px solid var(--amber);}.histrow.theirs{border-left:3px solid var(--teal);}
+  .histrow .hn{color:var(--muted);font-size:10.5px;min-width:22px;text-align:right;}
+  .histrow .hwho{font-weight:700;min-width:34px;font-size:12px;}
+  .histrow .hdice{color:var(--muted);font-variant-numeric:tabular-nums;min-width:30px;font-size:11.5px;}
+  .histrow .hmoves{flex:1;color:var(--text);word-break:break-word;font-size:12px;}
+  .histrow .hrew{appearance:none;border:1px solid rgba(226,168,87,.38);background:rgba(226,168,87,.12);color:var(--amber);font:inherit;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:9px;cursor:pointer;flex:none;white-space:nowrap;}
+  .histrow .hrew:active{background:rgba(226,168,87,.24);}
+  .histrow .hpips{font-size:10.5px;color:var(--muted);white-space:nowrap;}
+  .btn.active{background:rgba(95,185,167,.16);color:var(--teal);border-color:rgba(95,185,167,.4);}
+  .histfoot{padding:10px 16px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center;}
+  /* Branch badge */
+  .branchbadge{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:rgba(226,168,87,.10);border:1px solid rgba(226,168,87,.22);border-radius:8px;padding:2px 8px;}
+  /* Replay bar */
+  .replaybar{position:absolute;top:0;left:0;right:0;z-index:6;background:rgba(8,13,10,.9);display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);}
+  .replaybar button{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--text);font:inherit;font-size:13px;padding:6px 14px;border-radius:9px;cursor:pointer;}
+  .replaybar button:disabled{opacity:.3;pointer-events:none;}
+  .replaybar .rinfo{flex:1;text-align:center;font-size:12.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title">ТАБЛА</h1>
+    <div class="sub" id="sub">standard</div>
+  </header>
+  <div class="seg" id="seg">
+    <button data-v="backgammon" class="on">Табла</button>
+    <button data-v="gulbara">Гюлбара</button>
+    <button data-v="tapa">Тапа</button>
+  </div>
+  <div id="status" class="status"></div>
+  <div class="boardwrap">
+    <svg id="board" viewBox="0 0 1000 720" aria-label="Tabla board"></svg>
+    <!-- End-game overlay -->
+    <div id="overlay" class="overlay hidden">
+      <div class="ovcard">
+        <div id="ovmsg"></div>
+        <div class="ovbtns">
+          <button id="again" class="btn primary">Play again</button>
+          <button id="explore" class="btn">↩ Explore</button>
+        </div>
+      </div>
+    </div>
+    <!-- Pre-game: choose color, then roll for first move -->
+    <div id="pregame" class="overlay hidden"><div class="ovcard pgcard" id="pgcard"></div></div>
+    <!-- History / branching modal -->
+    <div id="histmodal" class="histmodal hidden">
+      <div class="histhead">
+        <h2 id="histtitle">Game History</h2>
+        <button id="histclose" class="btn">✕</button>
+      </div>
+      <div class="histbody" id="histbody"></div>
+      <div class="histfoot">
+        <button id="replaybtn" class="btn">▶ Replay</button>
+        <div class="spacer"></div>
+        <span id="branchbadge" class="branchbadge hidden"></span>
+      </div>
+    </div>
+    <!-- Replay step-through bar -->
+    <div id="replaybar" class="replaybar hidden">
+      <button id="rprev">◀</button>
+      <span class="rinfo" id="rinfo">Turn 1</span>
+      <button id="rnext">▶</button>
+      <button id="rclose" style="margin-left:auto">✕</button>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="restart" class="btn">↺&nbsp;Restart</button>
+    <button id="undo" class="btn">↶&nbsp;Undo</button>
+    <button id="bearoff" class="btn primary hidden">Bear&nbsp;off&nbsp;›</button>
+    <button id="watchbtn" class="btn">▶&nbsp;Auto</button>
+    <button id="flipbtn" class="btn">⇅&nbsp;Flip</button>
+    <button id="histbtn" class="btn" disabled>History</button>
+    <div class="spacer"></div>
+    <label class="tog spd"><span>Speed</span><input type="range" id="aiSpeedRange" min="200" max="2000" step="100" value="1000"><span id="spdval" class="spdval">1.0s</span></label>
+    <label class="tog"><input type="checkbox" id="statsTog" checked><span class="sw"></span><span>Stats</span></label>
+    <label class="tog"><input type="checkbox" id="hintTog"><span class="sw"></span><span>Hint</span></label>
+    <label class="tog"><input type="checkbox" id="guessTog"><span class="sw"></span><span>Guess</span></label>
+  </div>
+  <div id="hintline" class="hintline hidden"></div>
+  <div id="pipline" class="hintline hidden"></div>
+  <div id="panel" class="panel"></div>
+  <footer id="foot"></footer>
+</div>
+<script>
+"use strict";
+/* ============================================================================
+   Backgammon engine — three Bulgarian variants
+     'backgammon' : standard tabla. Hit lone enemy -> bar. 2+ blocks.
+     'tapa'       : Plakoto. All 15 start on the 24-pt. Opposite directions.
+                    Land on a lone enemy -> PIN it (trapped, no bar). 2+ blocks.
+     'gulbara'    : Fevga/Gioul. White stack on 24-pt, Black on 12-pt. BOTH move
+                    counter-clockwise (same rotation). A SINGLE checker blocks;
+                    no hitting. Doubles cascade handled in the UI layer.
+   State: { v, points[24] (+White/-Black = TOP controller), bar{w,k},
+            off{w,k}, pinned[24] (0|'w'|'k' = a checker trapped underneath) }.
+   Movement is expressed in pip-coordinates so all three schemes share one path.
+   ========================================================================== */
+const W = 'w', K = 'k';
+const other = p => (p === W ? K : W);
+
+function startState(v) {
+  v = v || 'backgammon';
+  const points = new Array(24).fill(0);
+  const pinned = new Array(24).fill(0);
+  if (v === 'tapa') { points[23] = 15; points[0] = -15; }
+  else if (v === 'gulbara') { points[23] = 15; points[11] = -15; }
+  else {
+    points[23] = 2; points[12] = 5; points[7] = 3; points[5] = 5;
+    points[0] = -2; points[11] = -5; points[16] = -3; points[18] = -5;
+  }
+  return { v, points, bar: { w: 0, k: 0 }, off: { w: 0, k: 0 }, pinned };
+}
+function clone(st) {
+  return { v: st.v, points: st.points.slice(), bar: { w: st.bar.w, k: st.bar.k },
+           off: { w: st.off.w, k: st.off.k }, pinned: st.pinned.slice() };
+}
+const topOwner = (st, i) => (st.points[i] > 0 ? W : st.points[i] < 0 ? K : null);
+const ownCount = (st, p, i) => (topOwner(st, i) === p ? Math.abs(st.points[i]) : 0);
+const whiteCount = (st, i) => (st.points[i] > 0 ? st.points[i] : 0);
+const blackCount = (st, i) => (st.points[i] < 0 ? -st.points[i] : 0);
+const entryIndex = (p, d) => (p === W ? 24 - d : d - 1);   // backgammon bar entry
+
+/* pip-coordinate of index i for player p (distance to bear off, 1..24) */
+function pipOf(st, p, i) {
+  if (st.v === 'gulbara' && p === K) return (i <= 11) ? (13 + i) : (i - 11);
+  return p === W ? (i + 1) : (24 - i);
+}
+function idxOfPip(st, p, q) {
+  if (st.v === 'gulbara' && p === K) return (q <= 12) ? (q + 11) : (q - 13);
+  return p === W ? (q - 1) : (24 - q);
+}
+function homeRange(st, p) {
+  if (st.v === 'gulbara' && p === K) return [12, 17];
+  return p === W ? [0, 5] : [18, 23];
+}
+function pip(st, p) {
+  let s = 0;
+  for (let i = 0; i < 24; i++) {
+    if (topOwner(st, i) === p) s += Math.abs(st.points[i]) * pipOf(st, p, i);
+    if (st.pinned[i] === p) s += pipOf(st, p, i);
+  }
+  return s + st.bar[p] * 25;
+}
+function allHome(st, p) {
+  if (st.bar[p] > 0) return false;
+  const [lo, hi] = homeRange(st, p);
+  for (let i = 0; i < 24; i++) {
+    if (i >= lo && i <= hi) continue;
+    if (topOwner(st, i) === p && Math.abs(st.points[i]) > 0) return false;
+    if (st.pinned[i] === p) return false;   // a pinned checker stuck outside home
+  }
+  return true;
+}
+function winner(st) { return st.off.w === 15 ? W : st.off.k === 15 ? K : null; }
+
+/* Can player p land on index `to`? */
+function blocked(st, p, to) {
+  const o = other(p), v = st.points[to];
+  const enemyTop = (o === W) ? v > 0 : v < 0;
+  const enemyCount = Math.abs(v);
+  if (st.v === 'gulbara') return enemyTop && enemyCount >= 1;   // single blocks
+  if (st.v === 'tapa') {
+    if (enemyTop && enemyCount >= 2) return true;
+    if (enemyTop && enemyCount === 1 && st.pinned[to] !== 0) return true; // no nested re-pin
+    return false;
+  }
+  return enemyTop && enemyCount >= 2;   // backgammon
+}
+/* Does landing on `to` capture a lone enemy? (hit in backgammon, pin in tapa) */
+function hitDetect(st, p, to) {
+  if (st.v === 'gulbara') return false;
+  const o = other(p), v = st.points[to];
+  const enemyTop = (o === W) ? v > 0 : v < 0;
+  return enemyTop && Math.abs(v) === 1;
+}
+
+function singleMoves(st, p, d) {
+  const res = [];
+  if (st.v === 'backgammon' && st.bar[p] > 0) {
+    const ei = entryIndex(p, d);
+    if (ei >= 0 && ei <= 23 && !blocked(st, p, ei)) res.push({ from: 'bar', to: ei, hit: hitDetect(st, p, ei), die: d });
+    return res;
+  }
+  const [lo, hi] = homeRange(st, p);
+  const home = allHome(st, p);
+  let maxPip = -1;
+  if (home) for (let i = lo; i <= hi; i++) if (topOwner(st, i) === p) { const q = pipOf(st, p, i); if (q > maxPip) maxPip = q; }
+  for (let i = 0; i < 24; i++) {
+    if (topOwner(st, i) !== p) continue;     // only your top checkers move (pinned ones are stuck)
+    const q = pipOf(st, p, i), q2 = q - d;
+    if (q2 >= 1) {
+      const to = idxOfPip(st, p, q2);
+      if (!blocked(st, p, to)) res.push({ from: i, to, hit: hitDetect(st, p, to), die: d });
+    } else if (home) {
+      if (q === d) res.push({ from: i, to: 'off', off: true, die: d });
+      else if (q < d && q === maxPip) res.push({ from: i, to: 'off', off: true, die: d });
+    }
+  }
+  return res;
+}
+function applyMove(st, p, m) {
+  const ns = clone(st);
+  if (m.from === 'bar') ns.bar[p]--;
+  else {
+    ns.points[m.from] -= (p === W ? 1 : -1);
+    if (ns.points[m.from] === 0 && ns.pinned[m.from] !== 0) {   // released the checker we were pinning
+      const trapped = ns.pinned[m.from]; ns.pinned[m.from] = 0;
+      ns.points[m.from] = (trapped === W ? 1 : -1);
+    }
+  }
+  if (m.off) { ns.off[p]++; return ns; }
+  const to = m.to;
+  if (st.v === 'tapa' && m.hit) {           // pin the lone enemy
+    ns.pinned[to] = other(p);
+    ns.points[to] = (p === W ? 1 : -1);
+  } else if (m.hit) {                        // backgammon hit -> bar
+    ns.points[to] = 0; ns.bar[other(p)]++; ns.points[to] += (p === W ? 1 : -1);
+  } else {
+    ns.points[to] += (p === W ? 1 : -1);
+  }
+  return ns;
+}
+
+function stateKey(s, rem) {
+  return s.points.join(',') + '|' + s.pinned.join('') + '|' + s.bar.w + ',' + s.bar.k +
+         '|' + s.off.w + ',' + s.off.k + (rem ? '|' + rem.slice().sort().join('') : '');
+}
+/* All legal full turns for a (1- or 2-value) dice roll, enforcing max-dice +
+   higher-die rules. NOT used for the gulbara doubles cascade. */
+function generateTurns(st, p, dice) {
+  const diceList = dice[0] === dice[1] ? [dice[0], dice[0], dice[0], dice[0]] : [dice[0], dice[1]];
+  const results = []; let best = 0; const seen = new Set();
+  function dfs(s, rem, acc) {
+    let extended = false; const tried = new Set();
+    for (let idx = 0; idx < rem.length; idx++) {
+      const d = rem[idx]; if (tried.has(d)) continue; tried.add(d);
+      for (const m of singleMoves(s, p, d)) {
+        extended = true;
+        const ns = applyMove(s, p, m); const r2 = rem.slice(); r2.splice(idx, 1);
+        const k = stateKey(ns, r2); if (seen.has(k)) continue; seen.add(k);
+        dfs(ns, r2, acc.concat([m]));
+      }
+    }
+    if (!extended) { if (acc.length > best) best = acc.length; results.push({ moves: acc, end: s }); }
+  }
+  dfs(st, diceList, []);
+  let kept = results.filter(r => r.moves.length === best);
+  if (best === 1 && dice[0] !== dice[1]) {
+    const hi = Math.max(dice[0], dice[1]); const hiMoves = kept.filter(r => r.moves[0].die === hi);
+    if (hiMoves.length > 0) kept = hiMoves;
+  }
+  const out = []; const ks = new Set();
+  for (const r of kept) { const k = stateKey(r.end, null); if (ks.has(k)) continue; ks.add(k); out.push(r); }
+  return out;
+}
+
+/* EXACT capture chances over all 36 rolls (blocks respected).
+   backgammon: hit chance. tapa: pin chance. gulbara: none. */
+function hitChances(st, attacker) {
+  const def = other(attacker); const blots = [];
+  for (let i = 0; i < 24; i++) if (ownCount(st, def, i) === 1) blots.push(i);
+  const hitCount = {}; blots.forEach(b => hitCount[b] = 0); let anyCount = 0;
+  if (blots.length === 0 || st.v === 'gulbara') return { blots: st.v === 'gulbara' ? [] : blots, hitCount, anyCount, perBlot: {} };
+  for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) {
+    const turns = generateTurns(st, attacker, [a, b]); const hitSet = new Set();
+    for (const t of turns) for (const m of t.moves) if (m.hit) hitSet.add(m.to);
+    let any = false; for (const bl of blots) if (hitSet.has(bl)) { hitCount[bl]++; any = true; }
+    if (any) anyCount++;
+  }
+  const perBlot = {}; for (const bl of blots) perBlot[bl] = hitCount[bl] / 36;
+  return { blots, hitCount, anyCount, perBlot };
+}
+function entryStats(st, p) {
+  if (st.v !== 'backgammon' || st.bar[p] === 0) return null;
+  let blk = 0; for (let d = 1; d <= 6; d++) if (blocked(st, p, entryIndex(p, d))) blk++;
+  const dance = (blk * blk) / 36;
+  return { blocked: blk, dancePct: dance, enterPct: 1 - dance, onBar: st.bar[p] };
+}
+
+/* ---- evaluation ---- */
+function shotApprox(st, blot, attacker) {           // block-free, standard-direction shot estimate
+  const ds = new Set();
+  for (let i = 0; i < 24; i++) if (ownCount(st, attacker, i) > 0) {
+    const dist = attacker === W ? (i - blot) : (blot - i); if (dist > 0) ds.add(dist);
+  }
+  if (st.bar[attacker] > 0) { const dist = attacker === W ? (24 - blot) : (blot + 1); if (dist > 0) ds.add(dist); }
+  if (ds.size === 0) return 0;
+  let cnt = 0;
+  for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) {
+    let hit = false;
+    for (const dist of ds) { if (dist === a || dist === b || dist === a + b) { hit = true; break; } if (a === b && (dist === 2 * a || dist === 3 * a || dist === 4 * a)) { hit = true; break; } }
+    if (hit) cnt++;
+  }
+  return cnt / 36;
+}
+function homePoints(st, p) { const [lo, hi] = homeRange(st, p); let c = 0; for (let i = lo; i <= hi; i++) if (ownCount(st, p, i) >= 2) c++; return c; }
+function madePoints(st, p) { let c = 0; for (let i = 0; i < 24; i++) if (ownCount(st, p, i) >= 2) c++; return c; }
+function ownPip(p, i) { return p === W ? i + 1 : 24 - i; }
+
+/* True when no White checker is behind any Black checker (pure race, no contact). */
+function isRace(st) {
+  if (st.bar.w > 0 || st.bar.k > 0) return false;
+  let maxK = -1, minW = 25;
+  for (let i = 0; i < 24; i++) {
+    if (blackCount(st, i) > 0 && i > maxK) maxK = i;
+    if (whiteCount(st, i) > 0 && i < minW) minW = i;
+  }
+  return minW > maxK;
+}
+/* Length of the longest consecutive run of made points (≥2 checkers) for player p. */
+function primeLen(st, p) { let m = 0, c = 0; for (let i = 0; i < 24; i++) { if (ownCount(st, p, i) >= 2) { c++; if (c > m) m = c; } else c = 0; } return m; }
+
+function evalBackgammon(st, p) {
+  const o = other(p); let e = 0;
+  const racing = isRace(st);
+  // Pip is more decisive in a race; in contact, positional factors matter too
+  e += (pip(st, o) - pip(st, p)) * (racing ? 1.7 : 1.0);
+  e += (st.off[p] - st.off[o]) * 8;
+  e += (st.bar[o] - st.bar[p]) * 9;
+  if (!racing) {
+    e += (homePoints(st, p) - homePoints(st, o)) * 5;
+    e += (madePoints(st, p) - madePoints(st, o)) * 2;
+    // Primes: long consecutive blocks are powerful (quadratic bonus)
+    const pP = primeLen(st, p), pO = primeLen(st, o);
+    e += (pP * pP - pO * pO) * 0.9;
+    // Back anchor: holding two checkers in opponent's home is valuable
+    const [oLo, oHi] = p === W ? [18, 23] : [0, 5];
+    for (let i = oLo; i <= oHi; i++) if (ownCount(st, p, i) >= 2) e += 5;
+    // Blot exposure (adjusted by home board strength)
+    for (let i = 0; i < 24; i++) {
+      if (ownCount(st, p, i) === 1) { const s = shotApprox(st, i, o); const loss = 25 - ownPip(p, i); e -= s * ((4 + loss * 0.5) * (1 + homePoints(st, o) * 0.18)); }
+      if (ownCount(st, o, i) === 1) { const s = shotApprox(st, i, p); const loss = 25 - ownPip(o, i); e += s * ((4 + loss * 0.5) * (1 + homePoints(st, p) * 0.18)) * 0.55; }
+    }
+  }
+  return e;
+}
+function evalTapa(st, p) {
+  const o = other(p); let e = 0;
+  e += (pip(st, o) - pip(st, p)) * 0.9;
+  e += (st.off[p] - st.off[o]) * 9;
+  for (let i = 0; i < 24; i++) {
+    if (st.pinned[i] === o) e += 10 + pipOf(st, o, i) * 0.5;   // enemy trapped (more advanced = better)
+    if (st.pinned[i] === p) e -= 10 + pipOf(st, p, i) * 0.5;   // we are trapped
+    if (ownCount(st, p, i) === 1) e -= shotApprox(st, i, o) * (6 + pipOf(st, p, i) * 0.35); // pin risk
+    if (ownCount(st, o, i) === 1) e += shotApprox(st, i, p) * (6 + pipOf(st, o, i) * 0.35) * 0.6; // pin chance
+  }
+  e += (madePoints(st, p) - madePoints(st, o)) * 1.5;
+  return e;
+}
+function evalGulbara(st, p) {
+  const o = other(p); let e = 0;
+  e += (pip(st, o) - pip(st, p)) * 1.2;
+  e += (st.off[p] - st.off[o]) * 9;
+  e += (madePoints(st, p) - madePoints(st, o)) * 2.5;   // control / blocking
+  let backPip = -1, backIdx = -1;
+  for (let i = 0; i < 24; i++) if (ownCount(st, o, i) > 0) { const q = pipOf(st, o, i); if (q > backPip) { backPip = q; backIdx = i; } }
+  if (backIdx >= 0) {
+    let wall = 0;
+    for (let s = 1; s <= 6; s++) { const q = backPip - s; if (q >= 1) { const bi = idxOfPip(st, o, q); if (ownCount(st, p, bi) >= 2) wall++; } }
+    e += wall * 3;
+  }
+  return e;
+}
+function evalState(st, p) {
+  const w = winner(st); if (w === p) return 1e6; if (w === other(p)) return -1e6;
+  if (st.v === 'tapa') return evalTapa(st, p);
+  if (st.v === 'gulbara') return evalGulbara(st, p);
+  return evalBackgammon(st, p);
+}
+
+/* Move choice: expectimax 1-ply with adaptive candidate set.
+   All candidates within 28 eval units of the best 1-ply score are evaluated,
+   capped at 14. This widens the search vs the old fixed K_TOP=8 and ensures
+   moves that look mediocre by a simple 1-ply eval are not prematurely dismissed. */
+function aiChooseTurn(st, p, dice) {
+  const turns = generateTurns(st, p, dice);
+  if (turns.length <= 1) return turns[0] || { moves: [], end: st };
+  const o = other(p);
+  const scored = turns.map(t => ({ t, s: evalState(t.end, p) })).sort((a, b) => b.s - a.s);
+  const thresh = scored[0].s - 28;
+  const candidates = scored.filter(c => c.s >= thresh).slice(0, 14);
+  const combos = [];
+  for (let a = 1; a <= 6; a++) for (let b = a; b <= 6; b++) combos.push([a, b, a === b ? 1 : 2]);
+  let bestT = scored[0].t, bestE = -Infinity;
+  for (const { t: cand } of candidates) {
+    if (winner(cand.end)) { const e = evalState(cand.end, p); if (e > bestE) { bestE = e; bestT = cand; } continue; }
+    let acc = 0;
+    for (const [a, b, wt] of combos) {
+      const oturns = generateTurns(cand.end, o, [a, b]); let worst = Infinity;
+      if (oturns.length === 0) worst = evalState(cand.end, p);
+      else for (const ot of oturns) { const ev = evalState(ot.end, p); if (ev < worst) worst = ev; }
+      acc += worst * wt;
+    }
+    const expected = acc / 36; if (expected > bestE) { bestE = expected; bestT = cand; }
+  }
+  return bestT;
+}
+
+/* Expectimax value of position `end` (opponent of p about to roll), p's perspective.
+   Same rollout used inside aiChooseTurn, exposed for move-quality scoring. */
+function scoreEnd(end, p) {
+  if (winner(end)) return evalState(end, p);
+  const o = other(p); let acc = 0;
+  for (let a = 1; a <= 6; a++) for (let b = a; b <= 6; b++) {
+    const wt = a === b ? 1 : 2;
+    const oturns = generateTurns(end, o, [a, b]); let worst = Infinity;
+    if (oturns.length === 0) worst = evalState(end, p);
+    else for (const ot of oturns) { const ev = evalState(ot.end, p); if (ev < worst) worst = ev; }
+    acc += worst * wt;
+  }
+  return acc / 36;
+}
+/* Top-k candidate turns by expectimax score, deduped by resulting position.
+   Prefilters to the 14 best by static eval (as aiChooseTurn does) before the
+   costlier rollout, then sorts by expectimax value. */
+function topScored(st, p, dice, k) {
+  const turns = generateTurns(st, p, dice);
+  if (!turns.length) return [];
+  const stat = turns.map(t => ({ t, s: evalState(t.end, p) })).sort((a, b) => b.s - a.s);
+  const thresh = stat[0].s - 28;
+  const cand = stat.filter(c => c.s >= thresh).slice(0, 14);
+  const scored = cand.map(c => ({ moves: c.t.moves, end: c.t.end, score: scoreEnd(c.t.end, p) }));
+  scored.sort((a, b) => b.score - a.score);
+  const seen = new Set(), out = [];
+  for (const s of scored) {
+    const e = s.end;
+    const key = e.points.join(',') + '|' + e.bar.w + ',' + e.bar.k + '|' + e.off.w + ',' + e.off.k + '|' + (e.pinned ? e.pinned.join('') : '');
+    if (seen.has(key)) continue; seen.add(key); out.push(s);
+    if (k && out.length >= k) break;
+  }
+  return out;
+}
+
+/* gulbara doubles cascade: play the rolled double and every higher double, x4. */
+function cascadeDice(d) { const out = []; for (let v = d; v <= 6; v++) for (let k = 0; k < 4; k++) out.push(v); return out; }
+/* Greedy cascade play for the AI: ascending value order, must play each value if
+   legal, stop when a value cannot be (partly) completed. */
+function aiCascade(st, p, d) {
+  let cur = clone(st); const moves = [];
+  for (let v = d; v <= 6; v++) {
+    for (let k = 0; k < 4; k++) {
+      const ms = singleMoves(cur, p, v);
+      if (ms.length === 0) return { moves, end: cur };       // can't complete this value -> stop
+      let best = ms[0], bs = -Infinity;
+      for (const m of ms) { const ev = evalState(applyMove(cur, p, m), p); if (ev > bs) { bs = ev; best = m; } }
+      cur = applyMove(cur, p, best); moves.push(best);
+    }
+  }
+  return { moves, end: cur };
+}
+/* Play an explicit ordered list of dice values (cascade or hand-off remainder),
+   greedily, stopping at the first value that cannot be played (no skipping). */
+function aiDiceSeq(st, p, list) {
+  let cur = clone(st); const moves = [];
+  for (const v of list) {
+    const ms = singleMoves(cur, p, v);
+    if (ms.length === 0) break;
+    let best = ms[0], bs = -Infinity;
+    for (const m of ms) { const ev = evalState(applyMove(cur, p, m), p); if (ev > bs) { bs = ev; best = m; } }
+    cur = applyMove(cur, p, best); moves.push(best);
+  }
+  return { moves, end: cur };
+}
+
+function pointNum(p, i) { return p === W ? i + 1 : 24 - i; }
+function turnNotation(p, moves) {
+  if (!moves || moves.length === 0) return '(no play)';
+  return moves.map(m => {
+    const src = m.from === 'bar' ? 'bar' : pointNum(p, m.from);
+    const dst = m.off ? 'off' : pointNum(p, m.to);
+    return src + '/' + dst + (m.hit ? '*' : '');
+  }).join(' ');
+}
+
+/* ---- UI move helpers (max-dice without locking dice order) ---- */
+function diceListOf(dice) { return dice[0] === dice[1] ? [dice[0], dice[0], dice[0], dice[0]] : [dice[0], dice[1]]; }
+function maxUsable(st, p, rem, memo) {
+  if (rem.length === 0) return 0;
+  const key = stateKey(st, rem);
+  if (memo.has(key)) return memo.get(key);
+  let best = 0; const tried = new Set();
+  for (let idx = 0; idx < rem.length; idx++) {
+    const d = rem[idx]; if (tried.has(d)) continue; tried.add(d);
+    for (const m of singleMoves(st, p, d)) { const ns = applyMove(st, p, m); const r2 = rem.slice(); r2.splice(idx, 1); const u = 1 + maxUsable(ns, p, r2, memo); if (u > best) best = u; }
+  }
+  memo.set(key, best); return best;
+}
+function nextLegalMoves(st, p, rem, usedCount, globalMax, dice) {
+  if (globalMax === 0) return [];
+  const memo = new Map(); const out = []; const tried = new Set(); const seen = new Set();
+  for (let idx = 0; idx < rem.length; idx++) {
+    const d = rem[idx]; if (tried.has(d)) continue; tried.add(d);
+    for (const m of singleMoves(st, p, d)) {
+      const ns = applyMove(st, p, m); const r2 = rem.slice(); r2.splice(idx, 1);
+      if (usedCount + 1 + maxUsable(ns, p, r2, memo) === globalMax) { const k = m.from + '>' + (m.off ? 'off' : m.to) + ':' + m.die; if (!seen.has(k)) { seen.add(k); out.push(m); } }
+    }
+  }
+  if (globalMax === 1 && dice[0] !== dice[1]) { const hi = Math.max(dice[0], dice[1]); const hiM = out.filter(m => m.die === hi); if (hiM.length > 0) return hiM; }
+  return out;
+}
+
+if (typeof module !== 'undefined') module.exports = {
+  W, K, other, startState, clone, generateTurns, hitChances, entryStats,
+  evalState, aiChooseTurn, aiCascade, cascadeDice, pip, winner, singleMoves, applyMove,
+  scoreEnd, topScored, isRace, allHome,
+  turnNotation, ownCount, whiteCount, blackCount, topOwner, blocked, pointNum,
+  diceListOf, maxUsable, nextLegalMoves, pipOf, idxOfPip
+};
+/* ================================================================
+   UI — variant-aware game loop + branching / history exploration
+   Pip optimiser merged into Hints; branching uses savedGames.
+   ================================================================ */
+
+const PW=458/6, colL=j=>14+PW*(j+0.5), colR=j=>528+PW*(j+0.5);
+function slot(i){
+  const P=i+1; let top,x;
+  if(P<=6){top=false;x=colR(6-P);}else if(P<=12){top=false;x=colL(12-P);}
+  else if(P<=18){top=true;x=colL(P-13);}else{top=true;x=colR(P-19);}
+  if(G.flipped){x=1000-x;top=!top;}
+  return{x,top};
+}
+const TOPY=k=>70+k*54, BOTY=k=>648-k*54;
+function vcol(i){const P=i+1;if(P<=6)return 12-P;if(P<=12)return 12-P;if(P<=18)return P-13;return P-13;}
+const d6=()=>1+Math.floor(Math.random()*6);
+const VAR={
+  backgammon:{title:'ТАБЛА',sub:'standard · hit to the bar'},
+  gulbara:{title:'ГЮЛБАРА',sub:'same direction · blocks'},
+  tapa:{title:'ТАПА',sub:'pin to trap · no bar'}
+};
+
+const G={
+  variant:'backgammon',board:startState('backgammon'),turn:W,dice:[1,1],
+  used:[],globalMax:0,usedCount:0,partial:[],seq:[],sel:null,phase:'move',
+  statsOn:true,hintOn:false,guessOn:false,gameOver:false,hintSeq:null,log:[],msg:'',
+  // Guess mode: predict the opponent's move before it plays
+  guessPartial:null,guessUsed:[],guessUsedCount:0,guessSel:null,guessMax:0,
+  guessTarget:null,guessList:[],guessResult:null,guessShownAt:0,
+  dicePulseStart:0,        // timestamp of the last pair roll (drives the dice pulse)
+  autoPlan:null,           // Auto: remaining moves of the precomputed optimal turn (null = play greedily)
+  autoPlayed:0,            // Auto: how many planned moves Auto has played (vs usedCount → detects your manual moves)
+  cascade:false,cascadeList:[],rollsW:0,rollsK:0,passCount:0,
+  globalRolls:0,             // total rolls this game (for gulbara cascade timing)
+  aiSpeed:1000,              // ms per AI move (configurable)
+  rolling:false,rollFaces:null,  // human manual-roll animation
+  turnToken:0,aiRanToken:-1, // serialize AI turns: stale queued callbacks become no-ops
+  flipped:false,aiLastRoll:null,aiLastMoves:null,spectate:false,
+  human:'w',ai:'k',         // which color the person controls (W default); orientation follows this
+  pregame:null,             // {step:'color'|'rolloff', mine, ai, rolling} during pre-game setup
+  // Canonical per-player dice sequences (shared across all branches of one game)
+  rollSeq:{w:[],k:[]},nextRoll:{w:0,k:0},
+  // Turn log for current game
+  turnLog:[],
+  // All completed games (original + every branch); never cleared on branch
+  savedGames:[],   // [{label,turnLog,branchFrom}]
+  histViewGame:0,  // which savedGame index the history modal shows
+  branchFrom:null, // turn index this game branched from (null=original)
+  replayMode:false,replayStep:0,
+  // Гюлбара doubles hand-off
+  handover:false,        // current play is a transferred-dice hand-off
+  pendingHandover:null   // {dice:[...]} waiting for the opponent to play
+};
+
+const $=id=>document.getElementById(id);
+const boardEl=$('board'),statusEl=$('status'),panelEl=$('panel'),
+      hintEl=$('hintline'),pipEl=$('pipline'),undoBtn=$('undo'),bearBtn=$('bearoff'),
+      overlay=$('overlay'),ovmsg=$('ovmsg'),foot=$('foot'),segEl=$('seg'),
+      histModal=$('histmodal'),histBody=$('histbody'),replayBar=$('replaybar');
+
+const boardNum=i=>G.flipped?(24-i):(i+1);
+function boardNote(moves){
+  if(!moves||!moves.length) return '(no play)';
+  return moves.map(m=>{
+    const s=m.from==='bar'?'bar':boardNum(m.from);
+    const d=m.off?'off':boardNum(m.to);
+    return s+'/'+d+(m.hit?(G.variant==='tapa'?'⊗':'*'):'');
+  }).join(' ');
+}
+
+const cur=()=>G.partial[G.partial.length-1];
+const displayBoard=()=>(G.phase==='guess'&&G.guessPartial)?guessCur():(G.turn===G.human&&(G.phase==='move'||G.phase==='pass')&&!G.replayMode&&G.partial.length>0)?cur():G.board;
+function offered(){
+  if(!(G.turn===G.human&&G.phase==='move')) return [];
+  if(G.cascade){const v=G.used[0];return v?singleMoves(cur(),G.human,v):[];}
+  return nextLegalMoves(cur(),G.turn,G.used,G.usedCount,G.globalMax,G.dice);
+}
+function sources(){const s=new Set();for(const m of offered())s.add(m.from);return[...s];}
+function destsFor(src){return offered().filter(m=>m.from===src);}
+function aiHome(){return G.variant==='gulbara'?[12,17]:[18,23];}
+
+// Canonical dice — same player always gets same roll on their Nth turn
+function getRoll(p){
+  const seq=G.rollSeq[p],idx=G.nextRoll[p];
+  let dice;
+  if(idx<seq.length) dice=seq[idx].slice();
+  else{dice=[d6(),d6()];seq.push(dice.slice());}
+  G.nextRoll[p]=idx+1;
+  return dice;
+}
+function logTurnStart(){
+  G.turnLog.push({
+    turn:G.turn,dice:G.dice.slice(),
+    boardBefore:clone(G.board),boardAfter:null,
+    rollsW:G.rollsW,rollsK:G.rollsK,
+    nrW:G.nextRoll.w,nrK:G.nextRoll.k,
+    moves:[],
+    pipW:pip(G.board,W),pipK:pip(G.board,K)  // pip state at turn start
+  });
+}
+function logTurnEnd(moves){
+  if(!G.turnLog.length) return;
+  const e=G.turnLog[G.turnLog.length-1];
+  e.moves=(moves||[]).map(m=>({...m}));
+  e.boardAfter=clone(G.board);
+}
+function markLastTurn(props){ if(G.turnLog.length) Object.assign(G.turnLog[G.turnLog.length-1],props); }
+// A transferred-dice hand-off (Гюлбара): logged for history/replay, not a roll,
+// and never a branch target (doesn't advance the dice sequence).
+function logHandoverStart(dice){
+  G.turnLog.push({
+    turn:G.turn,dice:null,handover:true,handoverDice:dice.slice(),
+    boardBefore:clone(G.board),boardAfter:null,
+    rollsW:G.rollsW,rollsK:G.rollsK,nrW:G.nextRoll.w,nrK:G.nextRoll.k,
+    moves:[],pipW:pip(G.board,W),pipK:pip(G.board,K)
+  });
+}
+
+// Reset all game-specific state for a fresh game of variant v (no turn started yet).
+function setupBoard(v){
+  if(v) G.variant=v;
+  G.board=startState(G.variant);G.gameOver=false;G.log=[];
+  G.rollsW=0;G.rollsK=0;G.passCount=0;G.globalRolls=0;
+  G.rolling=false;G.rollFaces=null;G.turnToken=0;G.aiRanToken=-1;
+  G.cascade=false;G.cascadeList=[];G.aiLastRoll=null;G.aiLastMoves=null;
+  G.handover=false;G.pendingHandover=null;
+  G.spectate=false;G.replayMode=false;G.branchFrom=null;
+  G.rollSeq={w:[],k:[]};G.nextRoll={w:0,k:0};
+  G.turnLog=[];G.savedGames=[];G.histViewGame=0;
+  $('watchbtn').textContent='▶ Auto';
+  overlay.classList.add('hidden');closeHistModal();closeReplay();
+  $('histbtn').disabled=true;
+  $('title').textContent=VAR[G.variant].title;$('sub').textContent=VAR[G.variant].sub;
+  for(const btn of segEl.querySelectorAll('button'))
+    btn.classList.toggle('on',btn.dataset.v===G.variant);
+}
+// Begin play: fix identity + board orientation, seed the opening roll for `starter`, start.
+function startGame(humanColor,starter,openDice){
+  G.human=humanColor||W;G.ai=other(G.human);
+  G.flipped=(G.human===K);                       // person's home board sits at the bottom
+  G.pregame=null;closePregame();
+  G.rollSeq={w:[],k:[]};G.nextRoll={w:0,k:0};
+  G.turn=starter;
+  G.rollSeq[starter].push(openDice.slice());G.nextRoll[starter]=1;
+  G.dice=openDice.slice();G.msg='';
+  beginTurn();
+}
+// Immediate fresh game: White human, random opening. Used by headless harnesses.
+function newGame(v){
+  setupBoard(v);
+  let a,b;do{a=d6();b=d6();}while(a===b);
+  startGame(W, a>b?W:K, [a,b]);
+}
+// Interactive fresh game: choose color, then roll for first move.
+function openPregame(v){
+  setupBoard(v);
+  G.human=W;G.ai=K;G.flipped=false;
+  G.pregame={step:'color',mine:null,ai:null,rolling:false};
+  G.phase='pregame';
+  render();renderPregame();
+}
+// Small standalone die for the pre-game modal
+function pgDie(v){
+  const P=(x,y)=>'<circle cx="'+x+'" cy="'+y+'" r="5" fill="#2a2018"/>';
+  const a=14,b=30,c=46,m={1:[[b,b]],2:[[a,a],[c,c]],3:[[a,a],[b,b],[c,c]],4:[[a,a],[c,a],[a,c],[c,c]],5:[[a,a],[c,a],[b,b],[a,c],[c,c]],6:[[a,a],[c,a],[a,b],[c,b],[a,c],[c,c]]};
+  let s='<svg class="pgdie" viewBox="0 0 60 60"><rect x="2.5" y="2.5" width="55" height="55" rx="12" fill="#f3e6c9" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/>';
+  for(const [x,y] of (m[v]||m[1])) s+=P(x,y);
+  return s+'</svg>';
+}
+function closePregame(){const pe=$('pregame');if(pe)pe.classList.add('hidden');}
+function renderPregame(){
+  const pg=G.pregame;if(!pg){closePregame();return;}
+  $('pregame').classList.remove('hidden');
+  const card=$('pgcard');let h='';
+  if(pg.step==='color'){
+    h='<div class="pgtitle">New game</div><div class="pgsub">'+VAR[G.variant].title+' · choose your checkers</div>'
+     +'<div class="pgcolors">'
+     +'<div class="pgcolor" data-color="w"><div class="pgdisc w"></div><div class="lbl">White</div></div>'
+     +'<div class="pgcolor" data-color="k"><div class="pgdisc k"></div><div class="lbl">Black</div></div>'
+     +'</div>';
+  }else{
+    const youName=G.human===W?'White':'Black',aiName=G.ai===W?'White':'Black';
+    const pair=arr=>pgDie(arr[0])+pgDie(arr[1]);
+    let mineCell;
+    if(pg.rolling){const f=pg.mineFace||[1,1];mineCell='<div class="pgpair">'+pair(f)+'</div>';}
+    else if(pg.mine){mineCell='<div class="pgpair">'+pair(pg.mine)+'</div>';}
+    else{mineCell='<div class="pgpair pgtap" id="pgrollzone"><div class="pgempty">🎲</div><div class="pgempty">🎲</div></div>';}
+    const aiCell='<div class="pgpair">'+(pg.ai?pair(pg.ai):'')+'</div>';
+    h='<div class="pgtitle">Roll for first move</div><div class="pgsub">Higher total opens · you play '+youName+'</div>'
+     +'<div class="pgmsg">'+(pg.msg||'')+'</div>'
+     +'<div class="pgroll"><div class="pgcol"><div class="pgwho">You</div>'+mineCell+'</div>'
+     +'<div class="pgvs">vs</div>'
+     +'<div class="pgcol"><div class="pgwho">'+aiName+' (AI)</div>'+aiCell+'</div></div>'
+     +(pg.mine||pg.rolling?'':'<div class="pgtaphint">tap your dice to roll</div>');
+  }
+  card.innerHTML=h;
+  if(pg.step==='color'){for(const el of card.querySelectorAll('[data-color]'))el.addEventListener('click',()=>chooseColor(el.dataset.color));}
+  else{const z=card.querySelector('#pgrollzone');if(z)z.addEventListener('click',rollHuman);}
+}
+function chooseColor(c){
+  G.human=c;G.ai=other(c);G.flipped=(c===K);
+  G.pregame={step:'rolloff',mine:null,ai:[d6(),d6()],rolling:false,msg:''};
+  render();renderPregame();
+}
+function rollHuman(){
+  const pg=G.pregame;if(!pg||pg.rolling||pg.mine)return;
+  pg.rolling=true;pg.msg='';renderPregame();
+  const r6=()=>1+Math.floor(Math.random()*6),dur=560,t0=Date.now();
+  const iv=setInterval(()=>{
+    pg.mineFace=[r6(),r6()];renderPregame();
+    if(Date.now()-t0>=dur){
+      clearInterval(iv);pg.rolling=false;pg.mine=[r6(),r6()];
+      const ms=pg.mine[0]+pg.mine[1],as=pg.ai[0]+pg.ai[1];
+      if(ms===as){pg.ai=[d6(),d6()];pg.mine=null;pg.msg='Tie — tap to roll again.';renderPregame();return;}
+      const humanFirst=ms>as,starter=humanFirst?G.human:G.ai,openDice=(humanFirst?pg.mine:pg.ai).slice();
+      pg.msg=(humanFirst?'You':'AI')+' go first — '+openDice[0]+'-'+openDice[1]+'.';renderPregame();
+      setTimeout(()=>startGame(G.human,starter,openDice),760);
+    }
+  },70);
+}
+function rollFor(){G.dice=getRoll(G.turn);}
+function beginTurn(){
+  if(winner(G.board)){endGame();return;}
+  G.handover=false;G.turnToken++;
+  if(G.turn===W)G.rollsW++;else G.rollsK++;
+  G.globalRolls++;
+  logTurnStart();
+  $('histbtn').disabled=G.turnLog.length<1;
+  G.partial=[clone(G.board)];G.seq=[];G.sel=null;G.usedCount=0;
+  G.cascade=false;G.cascadeList=[];G.autoPlan=null;G.autoPlayed=0;   // fresh turn → no carried-over auto plan
+  const isDouble=G.dice[0]===G.dice[1];
+  // Гюлбара doubles cascade only after the 3rd roll of the GAME (i.e. 4th roll onward), not per-player
+  if(G.variant==='gulbara'&&isDouble&&G.globalRolls>3){
+    G.cascade=true;G.cascadeList=cascadeDice(G.dice[0]);G.used=G.cascadeList.slice();
+    G.globalMax=G.used.length;
+  }else{
+    G.used=diceListOf(G.dice);
+    G.globalMax=maxUsable(G.board,G.turn,diceListOf(G.dice),new Map());
+  }
+  if(G.turn===G.human&&!G.spectate){
+    G.phase='roll';G.sel=null;G.hintSeq=null;G.rolling=false;G.rollFaces=null;  // human must roll first
+    render();
+  }else{
+    if(isDbl())G.dicePulseStart=Date.now();
+    if(G.turn===G.human&&G.spectate){startAutoHuman();return;}   // auto-pilot the human's turn, interruptibly
+    if(G.guessOn&&!G.spectate&&!G.cascade&&G.turn===G.ai){
+      const chosen=aiChooseTurn(clone(G.board),G.ai,G.dice);
+      if(chosen&&chosen.moves.length>0){enterGuess(chosen);return;}
+    }
+    G.phase='ai';render();setTimeout(aiPlay,Math.max(300,G.aiSpeed*0.6));
+  }
+}
+// Cosmetic dice roll for the human (result is the pre-determined canonical roll), then move phase.
+function rollDice(){
+  if(G.phase!=='roll'||G.rolling)return;
+  G.rolling=true;const dur=Math.max(280,Math.min(640,G.aiSpeed*0.6)),t0=Date.now();
+  const iv=setInterval(()=>{
+    G.rollFaces=[1+Math.floor(Math.random()*6),1+Math.floor(Math.random()*6)];render();
+    if(Date.now()-t0>=dur){clearInterval(iv);G.rolling=false;G.rollFaces=null;revealRoll();}
+  },70);
+}
+function revealRoll(){
+  let canMove;
+  if(G.cascade)canMove=G.used.length>0&&singleMoves(cur(),G.human,G.used[0]).length>0;
+  else canMove=G.globalMax>0;
+  G.phase=canMove?'move':'pass';
+  if(G.hintOn&&G.phase==='move')
+    G.hintSeq=G.cascade?aiCascade(clone(G.board),G.human,G.dice[0]):aiChooseTurn(clone(G.board),G.human,G.dice);
+  else G.hintSeq=null;
+  if(G.phase==='move'){const s=sources();if(s.length===1)G.sel=s[0];}
+  if(isDbl())G.dicePulseStart=Date.now();
+  render();
+}
+// Begin a transferred-dice hand-off for the current player (Гюлбара).
+// They play the remainder ascending (stopping if stuck — no bounce), then roll normally.
+function beginHandover(){
+  const ho=G.pendingHandover;G.pendingHandover=null;G.turnToken++;
+  G.handover=true;G.cascade=true;G.cascadeList=ho.dice.slice();G.used=ho.dice.slice();
+  G.globalMax=G.used.length;
+  G.partial=[clone(G.board)];G.seq=[];G.sel=null;G.usedCount=0;
+  logHandoverStart(ho.dice);
+  $('histbtn').disabled=false;
+  if(G.turn===G.human&&!G.spectate){
+    const canMove=G.used.length>0&&singleMoves(cur(),G.human,G.used[0]).length>0;
+    if(!canMove){finishHandover();return;}            // nothing playable -> straight to normal turn
+    G.phase='move';
+    G.hintSeq=G.hintOn?aiDiceSeq(clone(cur()),G.human,G.used.slice()):null;
+    const s=sources();if(s.length===1)G.sel=s[0];
+    G.msg='Black couldn’t finish its doubles — play the leftover '+ho.dice.join(',')+', then roll.';
+    render();
+  }else{G.phase='ai';G.msg='';render();setTimeout(aiPlay,G.spectate?700:580);}
+}
+function animateMoves(moves,tp,done,tok){
+  let st=clone(G.board);const step=G.cascade?Math.max(260,Math.round(G.aiSpeed*0.45)):G.aiSpeed;
+  const go=k=>{
+    if(tok!==undefined&&G.turnToken!==tok)return;   // a newer turn started — this chain is stale
+    if(k>=moves.length){G.board=st;done();return;}
+    const m=moves[k];st=applyMove(st,tp,m);G.board=st;
+    const idx=G.used.indexOf(m.die);if(idx>=0)G.used.splice(idx,1);
+    render();setTimeout(()=>go(k+1),step);
+  };
+  render();setTimeout(()=>go(0),Math.max(220,Math.round(G.aiSpeed*0.4)));
+}
+function aiPlay(){
+  const tp=G.turn;const tok=G.turnToken;
+  if(G.aiRanToken===tok)return;        // a stale/duplicate queued aiPlay for this turn — ignore
+  G.aiRanToken=tok;
+  if(G.handover){                                   // AI plays transferred dice, then its normal turn
+    const res=aiDiceSeq(clone(G.board),tp,G.used.slice());
+    animateMoves(res.moves,tp,()=>{
+      logTurnEnd(res.moves);
+      G.log.unshift({who:tp,moves:res.moves.slice(),handover:true});
+      endHandover();
+    },tok);
+    return;
+  }
+  if(G.cascade){                                    // AI doubles cascade; remainder hands off
+    const full=G.cascadeList.slice();
+    const res=aiDiceSeq(clone(G.board),tp,full);
+    const remainder=full.slice(res.moves.length);
+    animateMoves(res.moves,tp,()=>{
+      if(tp===G.ai||G.spectate){G.aiLastRoll=[full[0],full[0]];G.aiLastMoves=res.moves;}
+      logTurnEnd(res.moves);markLastTurn({cascade:true,stopped:remainder.length>0});
+      G.log.unshift({who:tp,moves:res.moves.slice(),roll:[full[0],full[0]],cascade:true,stopped:remainder.length>0});
+      if(remainder.length>0)G.pendingHandover={dice:remainder};
+      afterTurn();
+    },tok);
+    return;
+  }
+  const aiDice=G.dice.slice();                       // normal turn
+  const chosen=aiChooseTurn(clone(G.board),tp,G.dice);
+  if(!chosen||chosen.moves.length===0){
+    G.passCount++;G.aiLastRoll=aiDice;G.aiLastMoves=[];
+    logTurnEnd([]);G.log.unshift({who:tp,moves:[],roll:aiDice});
+    afterTurn();return;
+  }
+  G.passCount=0;
+  animateMoves(chosen.moves,tp,()=>{
+    if(tp===G.ai||G.spectate){G.aiLastRoll=aiDice;G.aiLastMoves=chosen.moves;}
+    logTurnEnd(chosen.moves);G.log.unshift({who:tp,moves:chosen.moves.slice(),roll:aiDice});
+    afterTurn();
+  },tok);
+}
+function playMove(m){
+  G.passCount=0;
+  G.partial.push(applyMove(cur(),G.turn,m));G.seq.push(m);G.usedCount++;
+  const idx=G.used.indexOf(m.die);if(idx>=0)G.used.splice(idx,1);
+  G.sel=null;
+  if(G.cascade){                                     // active cascade OR hand-off (both cascade=true)
+    if(G.used.length===0){G.handover?finishHandover():finalize();return;}
+    if(offered().length===0){G.handover?finishHandover():cascadeStall();return;}
+    const s=sources();if(s.length===1)G.sel=s[0];render();return;
+  }
+  if(G.usedCount>=G.globalMax)finalize();
+  else{const s=sources();if(s.length===1)G.sel=s[0];render();}
+}
+// Active doubles cascade stalled -> entire remaining ladder transfers to the opponent.
+function cascadeStall(){
+  G.board=cur();logTurnEnd(G.seq);markLastTurn({cascade:true,stopped:true});
+  G.log.unshift({who:G.turn,moves:G.seq.slice(),roll:G.dice.slice(),cascade:true,stopped:true});
+  const remainder=G.used.slice();
+  if(remainder.length>0)G.pendingHandover={dice:remainder};
+  afterTurn();
+}
+function finishHandover(){
+  G.board=cur();logTurnEnd(G.seq);
+  G.log.unshift({who:G.turn,moves:G.seq.slice(),handover:true});
+  endHandover();
+}
+// After a hand-off, the SAME player rolls and plays their own normal turn.
+function endHandover(){
+  G.handover=false;G.cascade=false;G.cascadeList=[];
+  if(winner(G.board)){endGame();return;}
+  rollFor();G.msg='';beginTurn();
+}
+function finalize(){
+  G.board=cur();logTurnEnd(G.seq);
+  if(G.cascade)markLastTurn({cascade:true});
+  G.log.unshift({who:G.turn,moves:G.seq.slice(),roll:G.dice.slice(),cascade:G.cascade||undefined});
+  afterTurn();
+}
+function passTurn(){
+  G.passCount++;G.board=cur();logTurnEnd([]);
+  G.log.unshift({who:G.turn,moves:[],roll:G.dice.slice()});
+  afterTurn();
+}
+// ── Guess mode: predict the opponent's move before it plays ───────
+const guessCur=()=>G.guessPartial[G.guessPartial.length-1];
+function guessOffered(){
+  if(G.phase!=='guess'||!G.guessPartial)return[];
+  return nextLegalMoves(guessCur(),G.ai,G.guessUsed,G.guessUsedCount,G.guessMax,G.dice);
+}
+function guessSources(){const s=new Set();for(const m of guessOffered())s.add(m.from);return[...s];}
+function guessDests(src){return guessOffered().filter(m=>m.from===src);}
+function enterGuess(chosen){
+  G.guessTarget=chosen;G.guessPartial=[clone(G.board)];
+  G.guessUsed=diceListOf(G.dice);G.guessUsedCount=0;
+  G.guessMax=maxUsable(G.board,G.ai,diceListOf(G.dice),new Map());
+  G.guessSel=null;G.guessList=[];G.guessResult=null;
+  G.used=diceListOf(G.dice);          // dice strip shows the AI's full roll while guessing
+  G.phase='guess';G.msg='';render();
+}
+function recordGuess(m){
+  G.guessPartial.push(applyMove(guessCur(),G.ai,m));
+  const idx=G.guessUsed.indexOf(m.die);if(idx>=0)G.guessUsed.splice(idx,1);
+  G.guessUsedCount++;
+  G.guessList.push({from:m.from,to:(m.off?'off':m.to),die:m.die});
+  G.guessSel=null;
+  if(G.guessUsedCount>=G.guessMax||guessOffered().length===0){revealGuess();return;}
+  render();
+}
+function revealGuess(){
+  const pool=G.guessTarget.moves.map(m=>m.from+'>'+(m.off?'off':m.to)+':'+m.die);let score=0;
+  for(const g of G.guessList){const k=g.from+'>'+g.to+':'+g.die;const j=pool.indexOf(k);if(j>=0){pool.splice(j,1);score++;}}
+  G.guessResult=Math.min(2,score);
+  G.guessSel=null;G.guessPartial=null;
+  G.phase='guessrev';render();
+  setTimeout(()=>{G.guessResult=null;G.phase='ai';render();aiPlay();},1300);
+}
+// ── Auto-pilot (the "Auto" toggle): play the human's turn one die at a time, interruptibly ──
+function autoDelay(){return Math.max(260,Math.round(G.aiSpeed*0.6));}
+function startAutoHuman(){
+  revealRoll();                                  // reveal dice (+ pulse/hint), sets phase move/pass
+  if(G.phase==='pass'){setTimeout(()=>{if(G.spectate&&G.turn===G.human&&G.phase==='pass')passTurn();},autoDelay());return;}
+  setTimeout(autoStep,autoDelay());
+}
+function autoStep(){
+  if(!G.spectate||G.gameOver||G.replayMode||G.turn!==G.human)return;   // stopped or no longer our turn
+  if(G.phase==='pass'){passTurn();return;}
+  if(G.phase!=='move')return;
+  const opts=offered();
+  if(opts.length===0){if(G.cascade){G.handover?finishHandover():cascadeStall();}else finalize();return;}
+  // Fresh auto turn (started at the top, no dice used) → compute the WHOLE best turn once and replay it.
+  if(G.autoPlan===null&&G.usedCount===0&&!G.cascade){
+    const chosen=aiChooseTurn(clone(cur()),G.turn,G.dice);
+    G.autoPlan=(chosen&&chosen.moves)?chosen.moves.slice():[];G.autoPlayed=0;
+  }
+  let mv=null;
+  if(G.autoPlan){
+    if(G.usedCount===G.autoPlayed&&G.autoPlan.length>0){            // plan intact: you haven't moved during any interruption
+      const pm=G.autoPlan[0];
+      mv=opts.find(o=>o.from===pm.from&&o.die===pm.die&&!!o.off===!!pm.off&&(o.off||o.to===pm.to));
+      if(mv){G.autoPlan.shift();G.autoPlayed++;}else G.autoPlan=null;
+    }else G.autoPlan=null;                                          // you played something during the interruption → drop the plan
+  }
+  if(!mv){                                                          // mid-turn start or post-deviation → best single move for the current board
+    let bs=-Infinity;mv=opts[0];
+    for(const o of opts){const ns=applyMove(cur(),G.turn,o);const sc=evalState(ns,G.turn);if(sc>bs){bs=sc;mv=o;}}
+  }
+  playMove(mv);                                                     // updates the partial; auto-finalizes when the dice run out
+  if(G.spectate&&G.turn===G.human&&G.phase==='move')setTimeout(autoStep,autoDelay());
+}
+function afterTurn(){
+  if(winner(G.board)){endGame();return;}
+  if(G.passCount>=2){endGame();return;}
+  G.turn=other(G.turn);
+  if(G.pendingHandover){G.msg='';beginHandover();return;}  // opponent plays transferred dice first
+  rollFor();G.msg='';beginTurn();
+}
+function undo(){
+  if(G.usedCount===0)return;
+  G.partial.pop();const m=G.seq.pop();G.used.push(m.die);G.usedCount--;G.sel=null;
+  if(G.cascade)G.used.sort((a,b)=>a-b);
+  const s=sources();if(s.length===1)G.sel=s[0];render();
+}
+function bearOffClick(){if(G.sel===null)return;const m=destsFor(G.sel).find(x=>x.off);if(m)playMove(m);}
+function endGame(){
+  G.gameOver=true;G.phase='over';G.handover=false;G.pendingHandover=null;const w=winner(G.board);
+  const mars=w&&(w===W?(G.board.off.k===0):(G.board.off.w===0));
+  // Save completed game; do NOT overwrite savedGames (preserves original + prior branches)
+  const gameLabel=G.branchFrom!==null
+    ?'Branch → T.'+(G.branchFrom+1)
+    :'Game '+(G.savedGames.length+1);
+  G.savedGames.push({label:gameLabel,turnLog:G.turnLog.slice(),branchFrom:G.branchFrom});
+  G.histViewGame=G.savedGames.length-1;
+  G.msg='';render();
+  const term=G.variant==='backgammon'?'gammon':'марс';
+  const msg=w?((w===G.human?'You win':(w===W?'White wins':'Black wins'))+(mars?' — '+term+'!':'!')):'Draw!';
+  ovmsg.textContent=msg;
+  overlay.classList.remove('hidden');
+}
+
+// ── Branching ─────────────────────────────────────────────────────
+// Branch from turn n of savedGames[gameIdx].
+// The rollSeq is global and shared: restoring nextRoll pointers ensures
+// the player gets the SAME dice on each of their individual turns as they
+// did in the original, and fresh rolls are generated for turns beyond what
+// has been played before.
+function branchFromLog(sourceLog,n){
+  let snap=sourceLog[n];
+  if(!snap||n<0||n>=sourceLog.length) return;
+  if(snap.handover||!snap.dice){          // hand-offs aren't real rolls — step back to the roll that fed them
+    while(n>0&&sourceLog[n]&&(sourceLog[n].handover||!sourceLog[n].dice)) n--;
+    snap=sourceLog[n];
+    if(!snap||!snap.dice) return;
+  }
+  G.board=clone(snap.boardBefore);
+  G.turn=snap.turn;G.dice=snap.dice.slice();
+  G.rollsW=snap.rollsW;G.rollsK=snap.rollsK;
+  G.nextRoll={w:snap.nrW,k:snap.nrK};
+  // Keep the turns up to the branch point as context; new turns append after
+  G.turnLog=sourceLog.slice(0,n);
+  G.branchFrom=n;
+  G.gameOver=false;G.passCount=0;G.aiLastRoll=null;G.aiLastMoves=null;
+  G.spectate=false;G.cascade=false;G.log=[];
+  overlay.classList.add('hidden');closeHistModal();closeReplay();
+  $('histbtn').disabled=false;
+  G.msg='Branched from turn '+(n+1)+'. Same dice, new choices.';
+  render();beginTurn();
+}
+// Legacy/test entry — branch from a saved game by index
+function branchFromTurn(gameIdx,n){
+  const game=G.savedGames[gameIdx];
+  if(game) branchFromLog(game.turnLog,n);
+}
+// Rewind from a viewable row. If the source is the live (in-progress) game,
+// preserve it as a saved game first so nothing is lost, then branch.
+function doRewind(viewable,vIdx,n){
+  const g=viewable[vIdx];
+  let sourceLog;
+  if(g.live){
+    let liveLog=G.turnLog.slice();
+    if(liveLog.length&&liveLog[liveLog.length-1].boardAfter===null) liveLog=liveLog.slice(0,-1);
+    G.savedGames.push({label:'Game '+(G.savedGames.length+1)+' (partial)',turnLog:liveLog,branchFrom:G.branchFrom});
+    sourceLog=liveLog;
+  }else{
+    sourceLog=G.savedGames[vIdx].turnLog;
+  }
+  branchFromLog(sourceLog,n);
+}
+
+// ── History modal ─────────────────────────────────────────────────
+function openHistModal(gameIdx){
+  if(G.replayMode)closeReplay();
+  const midGame=!G.gameOver&&G.turnLog.length>0;
+  let viewable=G.savedGames.map(g=>({label:g.label,turnLog:g.turnLog,live:false}));
+  if(midGame) viewable.push({label:'Current game',turnLog:G.turnLog,live:true});
+  if(!viewable.length)return;
+  const idx=(gameIdx!==undefined&&gameIdx>=0&&gameIdx<viewable.length)?gameIdx:viewable.length-1;
+  G.histViewGame=idx;
+  renderHistModal(viewable,idx);
+  histModal.classList.remove('hidden');
+}
+function closeHistModal(){histModal.classList.add('hidden');}
+function renderHistModal(viewable,idx){
+  const game=viewable[idx];
+  $('histtitle').textContent=game.label||'History';
+  let html='';
+  // Game selector tabs (if more than one game)
+  if(viewable.length>1){
+    html+='<div style="display:flex;gap:6px;padding:10px 14px 6px;flex-wrap:wrap;border-bottom:1px solid rgba(201,162,109,.10)">';
+    viewable.forEach((g,gi)=>{
+      const a=gi===idx;
+      html+='<button class="htab" data-tab="'+gi+'" style="appearance:none;border:1px solid '+(a?'rgba(226,168,87,.4)':'var(--line)')+';background:'+(a?'rgba(226,168,87,.15)':'rgba(255,255,255,.03)')+';color:'+(a?'#e2a857':'var(--muted)')+';font:inherit;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;cursor:pointer">'+g.label+'</button>';
+    });
+    html+='</div>';
+  }
+  // Turn rows — every completed turn gets a Rewind button (hand-offs are shown but not branchable)
+  let shown=0,wt=0,kt=0;
+  game.turnLog.forEach((entry,i)=>{
+    if(game.live&&entry.boardAfter===null) return; // current in-progress turn: skip
+    shown++;
+    const isW=entry.turn===W;
+    const ColLetter=isW?'W':'B';
+    const tlabel=entry.handover?'↪':('T'+(isW?(++wt):(++kt)));
+    const pipYou=(entry.pipW||0),pipBlk=(entry.pipK||0);
+    if(entry.handover){                            // transferred-dice hand-off
+      const hnote=entry.moves&&entry.moves.length?boardNote(entry.moves):'(none playable)';
+      html+='<div class="histrow '+(isW?'mine':'theirs')+'" style="opacity:.82">'
+        +'<span class="hn">'+tlabel+'</span>'
+        +'<span class="hwho" style="color:'+(isW?'#e2a857':'#5fb9a7')+'">'+ColLetter+'</span>'
+        +'<span class="hdice" style="color:var(--gold)">↪'+(entry.handoverDice||[]).join(',')+'</span>'
+        +'<span class="hmoves"><i style="color:var(--muted)">hand-off:</i> '+hnote+'</span>'
+        +'<span class="hpips">⚪ '+pipYou+'&nbsp;·&nbsp;⚫ '+pipBlk+'</span>'
+        +'</div>';
+      return;
+    }
+    const rollStr=entry.dice[0]+'-'+entry.dice[1];
+    const note=entry.moves&&entry.moves.length
+      ?boardNote(entry.moves)+(entry.stopped?' · stalled → hand-off':'')
+      :'(no play)';
+    html+='<div class="histrow '+(isW?'mine':'theirs')+'">'
+      +'<span class="hn">'+tlabel+'</span>'
+      +'<span class="hwho" style="color:'+(isW?'#e2a857':'#5fb9a7')+'">'+ColLetter+'</span>'
+      +'<span class="hdice">'+rollStr+'</span>'
+      +'<span class="hmoves">'+note+'</span>'
+      +'<span class="hpips">⚪ '+pipYou+'&nbsp;·&nbsp;⚫ '+pipBlk+'</span>'
+      +'<button class="hrew" data-rew="'+idx+'" data-n="'+i+'">↩ Rewind</button>'
+      +'</div>';
+  });
+  if(!shown) html+='<div style="padding:20px;color:var(--muted);text-align:center">No completed turns yet.</div>';
+  histBody.innerHTML=html;
+  // Tab listeners
+  for(const btn of histBody.querySelectorAll('[data-tab]'))
+    btn.addEventListener('click',()=>renderHistModal(viewable,parseInt(btn.dataset.tab,10)));
+  // Rewind listeners
+  for(const btn of histBody.querySelectorAll('[data-rew]'))
+    btn.addEventListener('click',()=>doRewind(viewable,parseInt(btn.dataset.rew,10),parseInt(btn.dataset.n,10)));
+  $('replaybtn').disabled=idx>=G.savedGames.length||!game.turnLog.length;
+}
+
+// ── Replay ────────────────────────────────────────────────────────
+function openReplay(){
+  const game=G.savedGames[G.histViewGame];
+  if(!game||game.turnLog.length<1){closeHistModal();return;}
+  closeHistModal();
+  G.replayMode=true;G.replayStep=-1;
+  replayBar.classList.remove('hidden');
+  stepReplay(1);
+}
+function closeReplay(){
+  G.replayMode=false;
+  replayBar.classList.add('hidden');
+  render();
+}
+function stepReplay(delta){
+  const game=G.savedGames[G.histViewGame];
+  if(!game)return;
+  const log=game.turnLog;
+  G.replayStep=Math.max(-1,Math.min(log.length-1,G.replayStep+delta));
+  if(G.replayStep<0) G.board=clone(log[0].boardBefore);
+  else G.board=clone(log[G.replayStep].boardAfter||log[G.replayStep].boardBefore);
+  const e=log[G.replayStep];
+  $('rinfo').textContent='Turn '+(G.replayStep+1)+' / '+log.length+(e
+    ?' · '+(e.turn===G.human?'You':(e.turn===W?'White':'Black'))+' '+(e.handover?'hand-off':e.dice.join('-')):'');
+  $('rprev').disabled=G.replayStep<0;
+  $('rnext').disabled=G.replayStep>=log.length-1;
+  render();
+}
+
+// ── Board clicks ──────────────────────────────────────────────────
+boardEl.addEventListener('click',e=>{
+  // Guess mode — the player predicts the opponent's move
+  if(G.phase==='guess'){
+    const a=e.target.closest('[data-action]');
+    if(a&&a.dataset.action==='guessrev'){revealGuess();return;}
+    const t=e.target.closest('[data-pt],[data-zone]');if(!t)return;
+    if(t.dataset.zone==='bar'){if(G.variant==='backgammon'&&guessSources().includes('bar')){G.guessSel='bar';render();}return;}
+    const gi=parseInt(t.dataset.pt,10);
+    if(G.guessSel===null){if(guessSources().includes(gi)){G.guessSel=gi;render();}return;}
+    const gm=guessDests(G.guessSel).find(x=>!x.off&&x.to===gi);
+    if(gm){recordGuess(gm);return;}
+    const goff=guessDests(G.guessSel).find(x=>x.off);
+    if(goff&&gi===G.guessSel){recordGuess(goff);return;}
+    if(guessSources().includes(gi)){G.guessSel=gi;render();return;}
+    if(gi===G.guessSel){G.guessSel=null;render();}
+    return;
+  }
+  if(G.replayMode||G.turn!==G.human||G.gameOver)return;
+  if(G.phase==='roll'){rollDice();return;}
+  if(G.phase==='pass'){passTurn();return;}
+  if(G.phase!=='move')return;
+  const t=e.target.closest('[data-pt],[data-zone]');if(!t)return;
+  if(t.dataset.zone==='bar'){
+    if(G.variant==='backgammon'&&sources().includes('bar')){G.sel='bar';render();}return;
+  }
+  const i=parseInt(t.dataset.pt,10);
+  if(G.sel===null){if(sources().includes(i)){G.sel=i;render();}return;}
+  const m=destsFor(G.sel).find(x=>!x.off&&x.to===i);
+  if(m){playMove(m);return;}
+  if(sources().includes(i)){G.sel=i;render();return;}
+  if(i===G.sel&&sources().length>1){G.sel=null;render();}
+});
+
+// ── Event listeners ───────────────────────────────────────────────
+undoBtn.addEventListener('click',undo);
+bearBtn.addEventListener('click',bearOffClick);
+$('restart').addEventListener('click',()=>openPregame(G.variant));
+$('again').addEventListener('click',()=>openPregame(G.variant));
+$('explore').addEventListener('click',()=>openHistModal());
+segEl.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-v]');if(!b)return;openPregame(b.dataset.v);
+});
+$('statsTog').addEventListener('change',e=>{G.statsOn=e.target.checked;render();});
+$('guessTog').addEventListener('change',e=>{G.guessOn=e.target.checked;});
+$('hintTog').addEventListener('change',e=>{
+  G.hintOn=e.target.checked;
+  if(G.hintOn&&G.turn===G.human&&G.phase==='move')
+    G.hintSeq=G.cascade?aiCascade(clone(G.partial[0]),G.human,G.dice[0]):aiChooseTurn(clone(G.partial[0]),G.human,G.dice);
+  else G.hintSeq=null;
+  render();
+});
+$('flipbtn').addEventListener('click',()=>{
+  G.flipped=!G.flipped;$('flipbtn').classList.toggle('active',G.flipped);render();
+  if(!$('histmodal').classList.contains('hidden')) openHistModal(G.histViewGame); // keep history notation in sync
+});
+$('watchbtn').addEventListener('click',()=>{
+  G.spectate=!G.spectate;
+  $('watchbtn').textContent=G.spectate?'■ Stop':'▶ Auto';
+  if(!G.spectate){render();return;}                       // Stop: keep current partial; player continues manually
+  if(G.gameOver||G.replayMode||G.turn!==G.human){render();return;}
+  G.sel=null;G.rolling=false;G.rollFaces=null;
+  if(G.phase==='roll'){startAutoHuman();}                  // reveal, then step die-by-die
+  else if(G.phase==='move'){render();setTimeout(autoStep,autoDelay());}
+  else if(G.phase==='pass'){render();setTimeout(()=>{if(G.spectate&&G.phase==='pass')passTurn();},autoDelay());}
+  else render();
+});
+$('aiSpeedRange').addEventListener('input',e=>{
+  G.aiSpeed=+e.target.value;$('spdval').textContent=(G.aiSpeed/1000).toFixed(1)+'s';
+});
+$('histbtn').addEventListener('click',()=>openHistModal());
+$('histclose').addEventListener('click',closeHistModal);
+$('replaybtn').addEventListener('click',openReplay);
+$('rclose').addEventListener('click',closeReplay);
+$('rprev').addEventListener('click',()=>stepReplay(-1));
+$('rnext').addEventListener('click',()=>stepReplay(1));
+
+// ── Rendering helpers ─────────────────────────────────────────────
+function diePips(v,dx,dy,S,pipColr){
+  const g=[dx+S*.26,dx+S*.5,dx+S*.74],gy=[dy+S*.26,dy+S*.5,dy+S*.74],r=S*.085;
+  const col=pipColr||'#1b2320';
+  const extra=pipColr?' stroke="rgba(0,0,0,.5)" stroke-width="'+(r*0.4).toFixed(1)+'" paint-order="stroke"':'';
+  const P={1:[[1,1]],2:[[0,0],[2,2]],3:[[0,0],[1,1],[2,2]],4:[[0,0],[0,2],[2,0],[2,2]],
+    5:[[0,0],[0,2],[1,1],[2,0],[2,2]],6:[[0,0],[0,1],[0,2],[2,0],[2,1],[2,2]]};
+  return P[v].map(([c,rr])=>'<circle cx="'+g[c].toFixed(1)+'" cy="'+gy[rr].toFixed(1)+'" r="'+r.toFixed(1)+'" fill="'+col+'"'+extra+'/>').join('');
+}
+// Rainbow colour per doubles value (1-6) — bold border on a pair, with muted matching pips
+// Doubles are coloured by GENERAL strength (a per-variant heuristic): warm/saturated = strong, cool/muted = weak.
+// Border = base hue (the strength read); pips = a deeper, MORE-saturated version — the "information" sits inside.
+const PAIR_BORDER=['#ef4060','#f67034','#f4a221','#d3ad33','#5f93a8','#737d8c']; // rank 0 (strongest) → 5 (weakest)
+const PAIR_PIP   =['#c01338','#d24f0d','#b87706','#9c7e15','#356d84','#454e5c']; // deeper, more saturated
+const PAIR_RANK={                  // strength rank per die value 1-6, by variant ([0] unused)
+  backgammon:[0, 0,4,2,3,5,1],     // point-making: 1-1 & 6-6 top, 5-5 weakest
+  tapa:      [0, 5,4,3,2,1,0],     // long race + pinning: big doubles win, 1-1 weakest
+  gulbara:   [0, 0,1,2,3,4,5]      // cascade unrolls upward: 1-1 (→84 pips) best, 6-6 (24) weakest
+};
+const pairRank  =v=>(PAIR_RANK[G.variant]||PAIR_RANK.backgammon)[v]||0;
+const pairBorder=v=>PAIR_BORDER[pairRank(v)];
+const pairPip   =v=>PAIR_PIP[pairRank(v)];
+const isDbl=()=>G.dice&&G.dice.length===2&&G.dice[0]===G.dice[1];
+function die(v,dx,dy,colr,faded,fill,pipColr,sw){
+  const S=52;
+  return '<g opacity="'+(faded?.4:1)+'"><rect x="'+dx+'" y="'+dy+'" width="'+S+'" height="'+S+'" rx="12" fill="'+(fill||'url(#gDie)')+'" stroke="'+colr+'" stroke-width="'+(sw||2.5)+'"/>'+diePips(v,dx,dy,S,pipColr)+'</g>';
+}
+// (pair roll now triggers a brief dice pulse — see G.dicePulseStart + render)
+
+function checker(x,y,c){
+  const fx=x.toFixed(1);
+  return '<g filter="url(#sh)"><circle cx="'+fx+'" cy="'+y+'" r="30" fill="url(#'+(c==='w'?'gI':'gK')+')" stroke="'+(c==='w'?'#7d6536':'#0a0f0d')+'" stroke-width="1.5"/><circle cx="'+fx+'" cy="'+y+'" r="22" fill="none" stroke="'+(c==='w'?'rgba(255,246,222,.34)':'rgba(120,200,185,.20)')+'" stroke-width="1.4"/></g>';
+}
+function pinnedChecker(x,y,c){
+  const fx=x.toFixed(1);
+  return '<g><circle cx="'+fx+'" cy="'+y+'" r="30" fill="url(#'+(c==='w'?'gI':'gK')+')" stroke="#e8714e" stroke-width="3" opacity="0.65"/><circle cx="'+fx+'" cy="'+y+'" r="30" fill="none" stroke="#e8714e" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.85"/><rect x="'+(x-7).toFixed(1)+'" y="'+(y-1).toFixed(1)+'" width="14" height="10" rx="2.5" fill="#e8714e" opacity="0.92"/><path d="M'+(x-4).toFixed(1)+' '+(y-1).toFixed(1)+' v-3.5 a4 4 0 0 1 8 0 v3.5" stroke="#e8714e" stroke-width="2" fill="none"/></g>';
+}
+
+// ── Analysis ──────────────────────────────────────────────────────
+let _etCache=null;
+function emptyPointThreats(st,attacker){
+  const k=st.points.join(',')+st.pinned.join('')+attacker;
+  if(_etCache&&_etCache.k===k)return _etCache.v;
+  const cnt={};
+  for(let a=1;a<=6;a++) for(let b=1;b<=6;b++){
+    const turns=generateTurns(st,attacker,[a,b]);
+    const reached=new Set();
+    for(const t of turns) for(const m of t.moves)
+      if(!m.off&&st.points[m.to]===0&&!(st.pinned&&st.pinned[m.to]))reached.add(m.to);
+    for(const i of reached)cnt[i]=(cnt[i]||0)+1;
+  }
+  const out={};for(const i in cnt)out[i]=cnt[i]/36;
+  _etCache={k,v:out};return out;
+}
+
+// ── Board render ──────────────────────────────────────────────────
+function render(){
+  const disp=displayBoard();
+  const srcs=(G.turn===G.human&&G.phase==='move'&&!G.replayMode)?sources():[];
+  const dsts=(G.sel!==null)?destsFor(G.sel):[];
+  const topMost={};const[aHlo,aHhi]=aiHome();
+  let s='<defs>'
+    +'<radialGradient id="gI" cx="38%" cy="32%" r="78%"><stop offset="0%" stop-color="#f6ead0"/><stop offset="60%" stop-color="#e6d6ad"/><stop offset="100%" stop-color="#c6ad7f"/></radialGradient>'
+    +'<radialGradient id="gK" cx="38%" cy="32%" r="80%"><stop offset="0%" stop-color="#45534d"/><stop offset="62%" stop-color="#2c3833"/><stop offset="100%" stop-color="#19211e"/></radialGradient>'
+    +'<linearGradient id="gDie" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3ead7"/><stop offset="100%" stop-color="#d8caab"/></linearGradient>'
+    +'<linearGradient id="ptL" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bd9a64"/><stop offset="100%" stop-color="#8f7245"/></linearGradient>'
+    +'<linearGradient id="ptD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a30"/><stop offset="100%" stop-color="#1d2a23"/></linearGradient>'
+    +'<filter id="sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="2.2" flood-color="#000" flood-opacity="0.45"/></filter>'
+    +'<filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#e2a857" flood-opacity="0.9"/></filter>'
+    +'</defs>';
+  s+='<rect x="4" y="4" width="992" height="712" rx="18" fill="#0a100d" stroke="rgba(201,162,109,.30)" stroke-width="1.5"/>';
+  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="#16201b"/>';
+  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="2"/>';
+  for(let i=0;i<24;i++){
+    const{x,top}=slot(i);const light=((vcol(i)+(top?0:1))%2===0);const half=PW/2-3;
+    const pts=top?(x-half).toFixed(1)+',38 '+(x+half).toFixed(1)+',38 '+x.toFixed(1)+',314'
+               :(x-half).toFixed(1)+',682 '+(x+half).toFixed(1)+',682 '+x.toFixed(1)+',406';
+    s+='<polygon points="'+pts+'" fill="url(#'+(light?'ptL':'ptD')+')" opacity="0.96"/>';
+  }
+  s+='<rect x="472" y="14" width="56" height="692" fill="#0d1411" stroke="rgba(201,162,109,.18)" stroke-width="1"/>';
+  for(let i=0;i<24;i++){
+    const{x,top}=slot(i);let col='#c9a26d',op=0.45;
+    if(i>=0&&i<=5){col='#e2a857';op=0.80;}
+    if(i>=aHlo&&i<=aHhi){col='#5fb9a7';op=0.75;}
+    s+='<text x="'+x.toFixed(1)+'" y="'+(top?27:702)+'" text-anchor="middle" font-size="17" font-weight="600" fill="'+col+'" opacity="'+op+'" font-family="-apple-system,sans-serif">'+(G.flipped?(24-i):(i+1))+'</text>';
+  }
+  for(let i=0;i<24;i++){
+    const pinC=disp.pinned&&disp.pinned[i]?disp.pinned[i]:0;
+    const{x,top}=slot(i);let base=0;
+    if(pinC){s+=pinnedChecker(x,top?TOPY(0):BOTY(0),pinC);base=1;topMost[i]=top?TOPY(0):BOTY(0);}
+    const cnt=Math.abs(disp.points[i]);if(!cnt)continue;
+    const c=disp.points[i]>0?'w':'k';const n=Math.min(cnt,5);
+    for(let k=0;k<n;k++) s+=checker(x,top?TOPY(base+k):BOTY(base+k),c);
+    const oy=top?TOPY(base+n-1):BOTY(base+n-1);topMost[i]=oy;
+    if(cnt>5) s+='<text x="'+x.toFixed(1)+'" y="'+oy+'" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="700" fill="'+(c==='w'?'#3a2e12':'#dfeee9')+'" font-family="-apple-system,sans-serif">'+cnt+'</text>';
+  }
+  const barTop=c=>(c===W)?G.flipped:!G.flipped;      // bar stack follows the flip (same side as that colour's home)
+  const barY=(c,k)=>barTop(c)?TOPY(k):BOTY(k);
+  for(let k=0;k<disp.bar.w;k++) s+=checker(500,barY(W,k),'w');
+  for(let k=0;k<disp.bar.k;k++) s+=checker(500,barY(K,k),'k');
+  if(G.statsOn&&G.variant!=='gulbara'&&!G.replayMode){
+    const hcMe=hitChances(disp,G.human),hcFoe=hitChances(disp,G.ai);
+    for(let i=0;i<24;i++){
+      let prob=null,col=null;
+      if(ownCount(disp,G.human,i)===1){prob=hcFoe.perBlot[i];col='#e8714e';}   // your blot — chance AI hits (risk)
+      else if(ownCount(disp,G.ai,i)===1){prob=hcMe.perBlot[i];col='#74d6c6';}  // AI blot — chance you hit (opportunity)
+      if(prob==null)continue;
+      const{top}=slot(i);const x=slot(i).x;const oy=topMost[i]??(top?TOPY(0):BOTY(0));
+      s+='<text x="'+x.toFixed(1)+'" y="'+(oy+.5)+'" text-anchor="middle" dominant-baseline="central" font-size="15.5" font-weight="800" fill="'+col+'" stroke="#0c1210" stroke-width="2.6" paint-order="stroke" font-family="-apple-system,sans-serif">'+Math.round(prob*100)+'</text>';
+    }
+    const threats=emptyPointThreats(disp,G.ai);
+    for(const iStr in threats){
+      const i=parseInt(iStr);const prob=threats[i];if(prob<0.028)continue;
+      const{x,top}=slot(i);const cy=top?TOPY(0):BOTY(0);
+      s+='<text x="'+x.toFixed(1)+'" y="'+cy+'" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="600" fill="#e8714e" opacity="0.50" stroke="#0c1210" stroke-width="1.8" paint-order="stroke" font-family="-apple-system,sans-serif">'+Math.round(prob*100)+'</text>';
+    }
+  }
+  if(G.hintOn&&G.turn===G.human&&G.phase==='move'&&G.hintSeq&&G.hintSeq.moves.length&&G.sel===null){
+    const m0=G.hintSeq.moves[0];
+    if(m0.from==='bar') s+='<circle cx="500" cy="'+barY(G.human,Math.max(0,disp.bar[G.human]-1))+'" r="34" fill="none" stroke="#5fb9a7" stroke-width="3" stroke-dasharray="5 5"/>';
+    else{const{x,top}=slot(m0.from);const oy=topMost[m0.from]??(top?TOPY(0):BOTY(0));s+='<circle cx="'+x.toFixed(1)+'" cy="'+oy+'" r="34" fill="none" stroke="#5fb9a7" stroke-width="3" stroke-dasharray="5 5"/>';}
+  }
+  for(const src of srcs){
+    if(src==='bar'){s+='<circle cx="500" cy="'+barY(G.human,Math.max(0,disp.bar[G.human]-1))+'" r="33" fill="none" stroke="#e2a857" stroke-width="2.5" opacity="0.55"/>';continue;}
+    const{x,top}=slot(src);const oy=topMost[src]??(top?TOPY(0):BOTY(0));const onSel=(src===G.sel);
+    s+='<circle cx="'+x.toFixed(1)+'" cy="'+oy+'" r="'+(onSel?34:33)+'" fill="none" stroke="#e2a857" stroke-width="'+(onSel?4:2.5)+'" opacity="'+(onSel?1:.5)+'" '+(onSel?'filter="url(#glow)"':'')+'/>';
+  }
+  for(const m of dsts){
+    if(m.off)continue;
+    const to=m.to;const{x,top}=slot(to);
+    const bk=(disp.pinned&&disp.pinned[to]?1:0);
+    const cy=top?TOPY(bk+ownCount(disp,G.turn,to)):BOTY(bk+ownCount(disp,G.turn,to));
+    s+='<circle cx="'+x.toFixed(1)+'" cy="'+cy+'" r="27" fill="rgba(226,168,87,.16)" stroke="#e2a857" stroke-width="2.5" stroke-dasharray="4 4"/>';
+    if(m.hit&&G.variant==='tapa') s+='<text x="'+x.toFixed(1)+'" y="'+(cy+.5)+'" text-anchor="middle" dominant-baseline="central" font-size="18" fill="#e8714e" font-weight="800">⊗</text>';
+    else if(m.hit) s+='<text x="'+x.toFixed(1)+'" y="'+(cy+.5)+'" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#e8714e" font-weight="800">\xd7</text>';
+  }
+  if(G.phase==='guess'){
+    for(const src of guessSources()){
+      if(src==='bar'){s+='<circle cx="500" cy="'+barY(G.ai,Math.max(0,disp.bar[G.ai]-1))+'" r="33" fill="none" stroke="#c9a26d" stroke-width="2.5" stroke-dasharray="3 4" opacity="0.55"/>';continue;}
+      const{x,top}=slot(src);const oy=topMost[src]??(top?TOPY(0):BOTY(0));const on=(src===G.guessSel);
+      s+='<circle cx="'+x.toFixed(1)+'" cy="'+oy+'" r="'+(on?34:33)+'" fill="none" stroke="#c9a26d" stroke-width="'+(on?4:2.5)+'" stroke-dasharray="3 4" opacity="'+(on?1:.5)+'"/>';
+    }
+    if(G.guessSel!=null)for(const m of guessDests(G.guessSel)){
+      if(m.off)continue;const{x,top}=slot(m.to);const bk=(disp.pinned&&disp.pinned[m.to]?1:0);
+      const cy=top?TOPY(bk+ownCount(disp,G.ai,m.to)):BOTY(bk+ownCount(disp,G.ai,m.to));
+      s+='<circle cx="'+x.toFixed(1)+'" cy="'+cy+'" r="27" fill="rgba(201,162,109,.14)" stroke="#c9a26d" stroke-width="2.5" stroke-dasharray="4 4"/>';
+    }
+    s+='<g data-action="guessrev"><rect data-action="guessrev" x="430" y="410" width="140" height="30" rx="8" fill="rgba(201,162,109,0.16)" stroke="#c9a26d" stroke-width="1.5"/><text x="500" y="430" text-anchor="middle" font-size="13" font-weight="700" fill="#c9a26d" font-family="-apple-system,sans-serif" style="pointer-events:none">Reveal ▶</text></g>';
+  }
+  const colr=G.turn===W?'#e2a857':'#5fb9a7';
+  const dbl=isDbl(),diceColr=dbl?pairBorder(G.dice[0]):colr;
+  const pElapsed=Date.now()-G.dicePulseStart,pulsing=dbl&&pElapsed<1500&&!G.replayMode;
+  const pz=d=>pulsing?'<g class="dpulse" style="animation-delay:-'+pElapsed+'ms">'+d+'</g>':d;  // pair pulse (re-render safe via negative delay)
+  if(G.phase==='guessrev'){
+    const sc=G.guessResult==null?0:G.guessResult;
+    const icon=sc>=2?'💘':(sc>=1?'❤️':'💔');
+    s+='<text x="500" y="362" text-anchor="middle" font-size="54">'+icon+'</text>';
+    s+='<text x="500" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">'+sc+'/2 guessed</text>';
+  }else if(G.phase==='roll'){
+    if(G.rolling){
+      const f=G.rollFaces||[1,1];const S=52,gap=16,tot=2*S+gap,x0=500-tot/2;
+      s+=die(f[0],x0,334,colr,false);s+=die(f[1],x0+S+gap,334,colr,false);
+    }else{
+      s+='<text x="500" y="352" text-anchor="middle" font-size="46">🎲</text>';
+      s+='<text x="500" y="395" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">TAP TO ROLL</text>';
+    }
+  }else if(G.cascade){
+    s+=pz(die(G.used.length?G.used[0]:(G.handover?(G.cascadeList[0]||1):G.dice[0]),474,334,dbl?diceColr:colr,false,null,dbl?pairPip(G.dice[0]):null,dbl?8:undefined));
+    const lab=G.handover?'HAND-OFF':('RUN '+G.dice[0]+'→6');
+    s+='<text x="500" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="'+diceColr+'" font-family="-apple-system,sans-serif">'+lab+'</text>';
+    s+='<text x="500" y="403" text-anchor="middle" font-size="13" fill="#8ba095" font-family="-apple-system,sans-serif">'+(G.handover?G.used.join(',')+' left':G.used.length+' left')+'</text>';
+  }else{
+    // Persistent: show the full roll; consumed dice dimmed. During a guess, show the AI's full roll.
+    const full=diceListOf(G.dice);let rem,consumed=[];
+    if(G.phase==='guess'){rem=full.slice();}
+    else{rem=G.used.slice();const tmp=rem.slice();for(const v of full){const j=tmp.indexOf(v);if(j>=0)tmp.splice(j,1);else consumed.push(v);}}
+    const disp=rem.map(v=>[v,false]).concat(consumed.map(v=>[v,true]));
+    const S=52,gap=16,tot=disp.length*S+(disp.length-1)*gap,x0=500-tot/2;
+    for(let k=0;k<disp.length;k++) s+=pz(die(disp[k][0],x0+k*(S+gap),334,dbl?diceColr:colr,disp[k][1],null,dbl?pairPip(G.dice[0]):null,dbl?8:undefined));
+  }
+  if(G.replayMode) s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="rgba(0,0,0,.18)"/>';
+  for(let i=0;i<24;i++){const{x,top}=slot(i);s+='<rect data-pt="'+i+'" x="'+(x-PW/2).toFixed(1)+'" y="'+(top?14:360)+'" width="'+PW.toFixed(1)+'" height="346" fill="transparent"/>';}
+  s+='<rect data-zone="bar" x="472" y="14" width="56" height="692" fill="transparent"/>';
+  boardEl.innerHTML=s;
+
+  // Status
+  const tn=G.turn===G.human?'Your':(G.turn===W?'White’s':'Black’s');
+  let st='';
+  if(G.phase==='pregame'){
+    st='<b>New game</b> — '+(G.pregame&&G.pregame.step==='rolloff'?'roll for first move':'choose your side');
+  }else if(G.phase==='guess'){
+    const cn=G.ai===W?'White':'Black';
+    st='<span class="dot '+G.ai+'"></span><b>Guess '+cn+'’s move</b> — '+G.guessUsedCount+'/'+G.guessMax+' · tap pieces, then Reveal';
+  }else if(G.phase==='guessrev'){
+    const sc=G.guessResult==null?0:G.guessResult;
+    st='<span class="dot '+G.ai+'"></span><b>'+(sc>=2?'Spot on!':sc>=1?'Half right':'Missed')+'</b> — you guessed '+sc+'/2';
+  }else if(G.replayMode){
+    const log=(G.savedGames[G.histViewGame]||{turnLog:G.turnLog}).turnLog;
+    st='<span class="dot '+(log[G.replayStep]?.turn||'w')+'"></span><b>Replay</b> turn '+(G.replayStep+1)+' of '+log.length;
+  }else if(G.gameOver){
+    const w=winner(G.board);
+    st='<span class="dot '+(w||'w')+'"></span><b>'+(w?(w===G.human?'You win':(w===W?'White wins':'Black wins')):'Draw')+'</b>';
+  }else if(G.phase==='ai'){
+    st='<span class="dot '+G.turn+'"></span><b>'+(G.turn===W?'White':'Black')+'</b> is thinking…'+(G.spectate?' <span style="color:var(--gold);font-size:11px">WATCH</span>':'');
+  }else if(G.phase==='roll'){
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> turn — tap the board to roll';
+  }else if(G.phase==='pass'){
+    st='<span class="dot w"></span><b>No legal move</b> — tap board to continue.';
+  }else if(G.handover){
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> hand-off — play leftover <b>'+G.used.join(',')+'</b>, then roll';
+  }else if(G.cascade){
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> doubles run <b>'+G.dice[0]+'-'+G.dice[0]+'</b> → play '+G.dice[0]+'…6';
+  }else{
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> roll: <b>&nbsp;'+G.dice[0]+'-'+G.dice[1]+'</b>'+(G.dice[0]===G.dice[1]?' (\xd74)':'');
+  }
+  if(G.aiLastRoll&&G.aiLastMoves&&G.turn===G.human&&!G.gameOver&&!G.spectate&&!G.replayMode){
+    const note=boardNote(G.aiLastMoves.slice(0,4))+(G.aiLastMoves.length>4?'…':'');
+    st+='&nbsp;·&nbsp;<span style="color:#5fb9a7;font-size:12px">AI '+G.aiLastRoll[0]+'-'+G.aiLastRoll[1]+': '+note+'</span>';
+  }
+  if(G.branchFrom!==null&&!G.replayMode&&!G.gameOver)
+    st+='&nbsp;<span class="branchbadge">Branch T.'+(G.branchFrom+1)+'</span>';
+  if(G.msg) st+='&nbsp;·&nbsp;'+G.msg;
+  statusEl.innerHTML=st;
+
+  undoBtn.disabled=!(G.turn===G.human&&G.phase==='move'&&G.usedCount>0);
+  const canBear=(G.sel!==null)&&destsFor(G.sel).some(x=>x.off);
+  bearBtn.classList.toggle('hidden',!canBear);
+
+  // Hint line — suggested move only (it already shows bear-offs; no separate pip readout)
+  if(G.hintOn&&G.turn===G.human&&(G.phase==='move')&&!G.replayMode&&G.hintSeq&&G.hintSeq.moves.length){
+    hintEl.classList.remove('hidden');
+    const ms=G.hintSeq.moves;const cap=ms.length>6?ms.slice(0,6):ms;
+    hintEl.innerHTML='<span class="lab">Suggested</span><span class="mv">'+boardNote(cap)+(ms.length>6?'…':'')+'</span>';
+  }else hintEl.classList.add('hidden');
+  pipEl.classList.add('hidden');
+
+  renderPanel(disp);
+  foot.textContent=G.replayMode?'Replay — ◄► step, ↩ Rewind to branch. Each branch gets the same dice as the original game.':
+    !G.statsOn?'Tap a checker, then a highlighted point. Stats are off.':
+    G.variant==='gulbara'?'Гюлбара: counter-clockwise, single checker blocks. From your 4th roll, doubles run up to 6-6; what you can’t finish hands off to your opponent.':
+    G.variant==='tapa'?"Тапа: land on a lone enemy to PIN it (⊗). Numbers = exact chance that checker is pinned next roll.":
+    'Numbers on checker = exact chance that blot is hit next roll (yours red, AI teal). Small dim numbers = threat on empty points.';
+}
+
+// ── Panel ─────────────────────────────────────────────────────────
+function pctBar(prob){const p=Math.round(prob*100);return '<div class="bar"><i style="width:'+Math.max(4,p)+'%"></i></div><span class="pct">'+p+'%</span>';}
+function blotRows(disp,hc,mine,variant){
+  const rows=[];const cls=mine?'red':'teal';
+  const noun=variant==='tapa'?(mine?'your checker':'AI checker'):(mine?'your blot':'AI blot');
+  for(const i of hc.blots.slice().sort((a,b)=>hc.perBlot[b]-hc.perBlot[a])){
+    rows.push('<div class="row '+cls+'"><span class="pt">'+noun+' <small>· pt '+boardNum(i)+'</small></span>'+pctBar(hc.perBlot[i])+'</div>');
+  }
+  return rows.length?rows.join(''):'<div class="none">None exposed.</div>';
+}
+function renderPanel(disp){
+  if(!G.statsOn){panelEl.innerHTML='';return;}
+  const me=G.human,foe=G.ai,foeName=(foe===W?'White':'Black');
+  const pw=pip(disp,me),pk=pip(disp,foe);
+  const leadW=pw<pk?'leading by '+(pk-pw):'level';
+  const leadK=pk<pw?'leading by '+(pw-pk):'';
+  let html='<div class="card"><div class="pips">'
+    +'<div class="pip you"><div class="who">You &middot; pip</div><div class="val">'+pw+'</div><div class="lead">'+(leadW||'&nbsp;')+'</div></div>'
+    +'<div class="pipdiv"></div>'
+    +'<div class="pip ai"><div class="who">'+foeName+' &middot; pip</div><div class="val">'+pk+'</div><div class="lead">'+(leadK||'&nbsp;')+'</div></div>'
+    +'</div>';
+  if(G.variant==='backgammon'){
+    const esW=entryStats(disp,me),esK=entryStats(disp,foe);
+    if(esW||esK){
+      html+='<div class="entry">';
+      if(esW)html+='<span class="chip">You on bar \xd7'+esW.onBar+'</span><span>enter <b>'+Math.round(esW.enterPct*100)+'%</b></span><span>&middot; dance <b>'+Math.round(esW.dancePct*100)+'%</b></span>';
+      if(esK)html+='<span class="chip">'+foeName+' on bar \xd7'+esK.onBar+'</span><span>enter <b>'+Math.round(esK.enterPct*100)+'%</b></span><span>&middot; dance <b>'+Math.round(esK.dancePct*100)+'%</b></span>';
+      html+='</div>';
+    }
+  }
+  if(G.variant==='tapa'){
+    let pm=0,pai=0;
+    for(let i=0;i<24;i++){if(disp.pinned[i]===foe)pm++;if(disp.pinned[i]===me)pai++;}
+    if(pm||pai){
+      html+='<div class="entry">';
+      if(pm)html+='<span class="chip" style="color:#e2a857">You pinned <b>'+pm+'</b> ⊗</span>';
+      if(pai)html+='<span class="chip" style="color:#e8714e">Pinned by '+foeName+' <b>'+pai+'</b> ⊗</span>';
+      html+='</div>';
+    }
+  }
+  html+='</div>';
+  if(G.variant!=='gulbara'){
+    const hcW=hitChances(disp,me),hcK=hitChances(disp,foe);
+    const cap=G.variant==='tapa'?'pin':'hit';
+    html+='<div class="twocol">'
+      +'<div class="card"><div class="secthead">Threats to you'+(hcK.blots.length?' &middot; any '+Math.round(hcK.anyCount/36*100)+'%':'')+'</div>'+blotRows(disp,hcK,true,G.variant)+'</div>'
+      +'<div class="card"><div class="secthead">Your '+cap+'s'+(hcW.blots.length?' &middot; any '+Math.round(hcW.anyCount/36*100)+'%':'')+'</div>'+blotRows(disp,hcW,false,G.variant)+'</div>'
+      +'</div>';
+  }else{
+    let mpW=0,mpK=0,spW=0,spK=0;
+    for(let i=0;i<24;i++){if(ownCount(disp,me,i)>=2)mpW++;if(ownCount(disp,foe,i)>=2)mpK++;if(ownCount(disp,me,i)>=1)spW++;if(ownCount(disp,foe,i)>=1)spK++;}
+    html+='<div class="card"><div class="secthead">Control (blocks)</div><div class="pips">'
+      +'<div class="pip you"><div class="who">You</div><div class="val">'+spW+'</div><div class="lead">'+mpW+' 2+ stacks</div></div>'
+      +'<div class="pipdiv"></div>'
+      +'<div class="pip ai"><div class="who">'+foeName+'</div><div class="val">'+spK+'</div><div class="lead">'+mpK+' 2+ stacks</div></div>'
+      +'</div></div>';
+  }
+  const last=G.log.slice(0,3).map(l=>{
+    const note=l.moves&&l.moves.length?boardNote(l.moves)+(l.stopped?' · stalled':''):(l.handover?'—':'(no play)');
+    const rs=l.handover?'<span style="color:var(--gold)">↪</span> ':(l.roll?'<span style="opacity:.65">'+l.roll[0]+'-'+l.roll[1]+':</span> ':'');
+    return '<span class="chip"><b style="color:'+(l.who===W?'#e2a857':'#5fb9a7')+'">'+(l.who===G.human?'You':(l.who===W?'W':'Blk'))+'</b> '+rs+note+'</span>';
+  }).join(' ');
+  html+='<div class="card"><div class="secthead">Borne off &middot; recent</div><div class="entry flat">'
+    +'<span class="chip">You <b>'+disp.off[me]+'</b>/15</span>'
+    +'<span class="chip">'+foeName+' <b>'+disp.off[foe]+'</b>/15</span>'
+    +(last?'<span style="flex-basis:100%;height:0"></span>'+last:'')
+    +'</div></div>';
+  panelEl.innerHTML=html;
+}
+
+window.addEventListener('load',()=>openPregame('backgammon'));
+</script></body></html>
