@@ -94,8 +94,26 @@ expressed as small, isolated predicates (`blocked`, `hitDetect`, `homeRange`,
 - Hand-built **SVG board** with gradient checkers, dice (with a doubles "pulse"
   animation and a per-variant strength colour-coding of doubles), pinned-checker
   badges, and home-board highlighting.
-- Dark, tactile visual theme; **mobile-first** layout with safe-area insets,
-  installable web-app meta tags, and an inline SVG icon.
+- **Mobile-first** layout with safe-area insets, installable web-app meta tags,
+  and an inline SVG icon.
+
+## Settings menu, localisation & themes
+
+A **hamburger menu** (☰) in the controls bar collects the preferences, keeping
+the main bar focused on gameplay actions (Restart, Undo, Bear off, Auto, Flip,
+History). Inside it:
+
+- **Language — EN / BG.** The entire interface is fully localised in **English**
+  (default) and **Bulgarian** — status line, stats panel, hints, pre-game flow,
+  history/replay, end-game, footer help, and all controls. Switching is instant
+  and re-renders live.
+- **Theme — Standard / Light.** *Standard* is the original dark, tactile look
+  (default); *Light* is a warm, cream-and-walnut palette that themes the whole
+  page **and** the SVG board (felt, frame, points, numbers).
+- **Speed.** AI move pace is adjustable from **0.5 s to 5 s** per move.
+- **Stats / Hint / Guess** toggles.
+
+Language and theme choices are remembered across sessions (via `localStorage`).
 
 ---
 

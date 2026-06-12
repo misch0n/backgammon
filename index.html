@@ -16,12 +16,22 @@
     --bg:#0e1512;--bg2:#0a100d;--panel:#141e19;--panel2:#18241e;
     --line:rgba(201,162,109,.20);--gold:#c9a26d;--ivory:#ecdfbe;--onyx:#283330;
     --amber:#e2a857;--teal:#5fb9a7;--red:#e8714e;--text:#e9efe9;--muted:#8ba095;
+    --bgtop:#16211c;--surface:rgba(255,255,255,.04);--surface2:rgba(255,255,255,.05);
+    --swbg:rgba(255,255,255,.10);--swknob:#cdd6cf;
     --tnum:"tnum" 1;
+  }
+  /* Light theme ("light"); default dark stays "standard" */
+  body.light{
+    --bg:#efe7d4;--bg2:#e2d6ba;--bgtop:#f7f0de;--panel:#fbf6e9;--panel2:#f2e9d3;
+    --line:rgba(120,92,46,.26);--gold:#9a7a3e;--ivory:#5a4a28;--onyx:#cdbf9c;
+    --amber:#bd7c1c;--teal:#2f8d7b;--red:#c14e2c;--text:#2c2618;--muted:#776749;
+    --surface:rgba(60,44,18,.05);--surface2:rgba(60,44,18,.06);
+    --swbg:rgba(60,44,18,.16);--swknob:#fbf6e9;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;height:100%;}
   body{
-    background:radial-gradient(120% 80% at 50% -10%,#16211c 0%,var(--bg) 45%,var(--bg2) 100%);
+    background:radial-gradient(120% 80% at 50% -10%,var(--bgtop) 0%,var(--bg) 45%,var(--bg2) 100%);
     color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
     font-feature-settings:var(--tnum);
@@ -34,7 +44,7 @@
   header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:2px 2px 8px;}
   h1{font-size:19px;letter-spacing:.34em;font-weight:600;margin:0;color:var(--text);text-indent:.34em;}
   .sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;}
-  .seg{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:13px;padding:4px;margin:0 2px 11px;}
+  .seg{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:4px;margin:0 2px 11px;}
   .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;letter-spacing:.03em;padding:9px 6px;border-radius:10px;cursor:pointer;transition:.15s;}
   .seg button.on{background:linear-gradient(180deg,#e7b063,#d6993f);color:#241a08;box-shadow:0 4px 12px -6px rgba(226,168,87,.8);}
   .seg button:active{transform:translateY(1px);}
@@ -46,7 +56,7 @@
     box-shadow:0 18px 40px -20px rgba(0,0,0,.8),inset 0 0 0 1px var(--line);}
   svg#board{display:block;width:100%;height:auto;}
   .controls{display:flex;align-items:center;gap:6px;margin:11px 1px 0;flex-wrap:wrap;}
-  .btn{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  .btn{appearance:none;border:1px solid var(--line);background:var(--surface);
     color:var(--text);font:inherit;font-size:12.5px;font-weight:550;letter-spacing:.01em;
     padding:8px 11px;border-radius:11px;cursor:pointer;transition:.15s;user-select:none;}
   .btn:active{transform:translateY(1px);background:rgba(255,255,255,.07);}
@@ -55,8 +65,8 @@
   .spacer{flex:1;}
   .tog{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none;}
   .tog input{position:absolute;opacity:0;width:0;height:0;}
-  .sw{width:36px;height:20px;border-radius:99px;background:rgba(255,255,255,.10);position:relative;transition:.18s;flex:none;border:1px solid var(--line);}
-  .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#cdd6cf;transition:.18s;}
+  .sw{width:36px;height:20px;border-radius:99px;background:var(--swbg);position:relative;transition:.18s;flex:none;border:1px solid var(--line);}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--swknob);transition:.18s;}
   .tog input:checked + .sw{background:linear-gradient(180deg,#5fb9a7,#3f9d8b);}
   .tog input:checked + .sw::after{transform:translateX(16px);background:#06120f;}
   .spd input[type=range]{position:static;opacity:1;width:74px;height:18px;accent-color:#5fb9a7;cursor:pointer;}
@@ -88,7 +98,7 @@
   .entry{display:flex;gap:9px;align-items:center;font-size:13px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);color:var(--muted);flex-wrap:wrap;}
   .entry.flat{margin:0;border:0;padding:0;}
   .entry b{color:var(--text);font-variant-numeric:tabular-nums;}
-  .chip{font-size:11px;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);}
+  .chip{font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);}
   footer{margin:14px 2px 4px;font-size:11px;color:var(--muted);line-height:1.5;opacity:.85;}
   /* End overlay */
   .overlay{position:absolute;inset:0;background:rgba(7,12,10,.74);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:5;}
@@ -144,6 +154,24 @@
   .replaybar button{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--text);font:inherit;font-size:13px;padding:6px 14px;border-radius:9px;cursor:pointer;}
   .replaybar button:disabled{opacity:.3;pointer-events:none;}
   .replaybar .rinfo{flex:1;text-align:center;font-size:12.5px;color:var(--muted);}
+  /* Hamburger menu (settings: language, theme, speed, toggles) */
+  .menuwrap{position:relative;}
+  .menupanel{position:absolute;right:0;top:calc(100% + 6px);z-index:9;min-width:216px;
+    background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:11px 12px;box-shadow:0 18px 44px -16px rgba(0,0,0,.6);display:grid;gap:11px;}
+  .menupanel.hidden{display:none;}
+  .menurow{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--text);}
+  .menulabel{text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;color:var(--muted);}
+  .miniseg{display:inline-flex;gap:3px;background:var(--surface2);border:1px solid var(--line);border-radius:9px;padding:3px;}
+  .miniseg button{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:7px;cursor:pointer;transition:.12s;}
+  .miniseg button.on{background:linear-gradient(180deg,#e7b063,#d6993f);color:#241a08;}
+  #menubtn.active{background:rgba(95,185,167,.16);color:var(--teal);border-color:rgba(95,185,167,.4);}
+  /* Light-theme overlay/modal tints */
+  body.light .overlay{background:rgba(238,231,212,.74);}
+  body.light .histmodal{background:rgba(244,237,219,.95);}
+  body.light .replaybar{background:rgba(244,237,219,.92);}
+  body.light .replaybar button{background:var(--surface2);}
+  body.light .seg button.on,body.light .miniseg button.on,body.light .btn.primary{color:#2a1e06;}
 </style>
 </head>
 <body>
@@ -165,8 +193,8 @@
       <div class="ovcard">
         <div id="ovmsg"></div>
         <div class="ovbtns">
-          <button id="again" class="btn primary">Play again</button>
-          <button id="explore" class="btn">↩ Explore</button>
+          <button id="again" class="btn primary" data-i18n="playAgain">Play again</button>
+          <button id="explore" class="btn" data-i18n="explore">↩ Explore</button>
         </div>
       </div>
     </div>
@@ -175,12 +203,12 @@
     <!-- History / branching modal -->
     <div id="histmodal" class="histmodal hidden">
       <div class="histhead">
-        <h2 id="histtitle">Game History</h2>
+        <h2 id="histtitle" data-i18n="gameHistory">Game History</h2>
         <button id="histclose" class="btn">✕</button>
       </div>
       <div class="histbody" id="histbody"></div>
       <div class="histfoot">
-        <button id="replaybtn" class="btn">▶ Replay</button>
+        <button id="replaybtn" class="btn" data-i18n="replay">▶ Replay</button>
         <div class="spacer"></div>
         <span id="branchbadge" class="branchbadge hidden"></span>
       </div>
@@ -194,17 +222,30 @@
     </div>
   </div>
   <div class="controls">
-    <button id="restart" class="btn">↺&nbsp;Restart</button>
-    <button id="undo" class="btn">↶&nbsp;Undo</button>
-    <button id="bearoff" class="btn primary hidden">Bear&nbsp;off&nbsp;›</button>
+    <button id="restart" class="btn" data-i18n="restart">↺&nbsp;Restart</button>
+    <button id="undo" class="btn" data-i18n="undo">↶&nbsp;Undo</button>
+    <button id="bearoff" class="btn primary hidden" data-i18n="bearoff">Bear&nbsp;off&nbsp;›</button>
     <button id="watchbtn" class="btn">▶&nbsp;Auto</button>
-    <button id="flipbtn" class="btn">⇅&nbsp;Flip</button>
-    <button id="histbtn" class="btn" disabled>History</button>
+    <button id="flipbtn" class="btn" data-i18n="flip">⇅&nbsp;Flip</button>
+    <button id="histbtn" class="btn" disabled data-i18n="history">History</button>
     <div class="spacer"></div>
-    <label class="tog spd"><span>Speed</span><input type="range" id="aiSpeedRange" min="200" max="2000" step="100" value="1000"><span id="spdval" class="spdval">1.0s</span></label>
-    <label class="tog"><input type="checkbox" id="statsTog" checked><span class="sw"></span><span>Stats</span></label>
-    <label class="tog"><input type="checkbox" id="hintTog"><span class="sw"></span><span>Hint</span></label>
-    <label class="tog"><input type="checkbox" id="guessTog"><span class="sw"></span><span>Guess</span></label>
+    <div class="menuwrap">
+      <button id="menubtn" class="btn" aria-label="Menu">☰</button>
+      <div id="menupanel" class="menupanel hidden">
+        <div class="menurow"><span class="menulabel" data-i18n="language">Language</span>
+          <div class="miniseg" id="langseg"><button data-lang="en">EN</button><button data-lang="bg">BG</button></div></div>
+        <div class="menurow"><span class="menulabel" data-i18n="theme">Theme</span>
+          <div class="miniseg" id="themeseg"><button data-theme="standard" data-i18n="themeStandard">Standard</button><button data-theme="light" data-i18n="themeLight">Light</button></div></div>
+        <div class="menurow"><span class="menulabel" data-i18n="speed">Speed</span>
+          <label class="tog spd"><input type="range" id="aiSpeedRange" min="500" max="5000" step="100" value="1000"><span id="spdval" class="spdval">1.0s</span></label></div>
+        <div class="menurow"><span data-i18n="stats">Stats</span>
+          <label class="tog"><input type="checkbox" id="statsTog" checked><span class="sw"></span></label></div>
+        <div class="menurow"><span data-i18n="hint">Hint</span>
+          <label class="tog"><input type="checkbox" id="hintTog"><span class="sw"></span></label></div>
+        <div class="menurow"><span data-i18n="guess">Guess</span>
+          <label class="tog"><input type="checkbox" id="guessTog"><span class="sw"></span></label></div>
+      </div>
+    </div>
   </div>
   <div id="hintline" class="hintline hidden"></div>
   <div id="pipline" class="hintline hidden"></div>
@@ -653,15 +694,16 @@ const TOPY=k=>70+k*54, BOTY=k=>648-k*54;
 function vcol(i){const P=i+1;if(P<=6)return 12-P;if(P<=12)return 12-P;if(P<=18)return P-13;return P-13;}
 const d6=()=>1+Math.floor(Math.random()*6);
 const VAR={
-  backgammon:{title:'ТАБЛА',sub:'standard · hit to the bar'},
-  gulbara:{title:'ГЮЛБАРА',sub:'same direction · blocks'},
-  tapa:{title:'ТАПА',sub:'pin to trap · no bar'}
+  backgammon:{title:'ТАБЛА'},
+  gulbara:{title:'ГЮЛБАРА'},
+  tapa:{title:'ТАПА'}
 };
 
 const G={
   variant:'backgammon',board:startState('backgammon'),turn:W,dice:[1,1],
   used:[],globalMax:0,usedCount:0,partial:[],seq:[],sel:null,phase:'move',
   statsOn:true,hintOn:false,guessOn:false,gameOver:false,hintSeq:null,log:[],msg:'',
+  lang:'en',theme:'standard',menuOpen:false,   // UI prefs (localStorage-backed; EN + standard/dark default)
   // Guess mode: predict the opponent's move before it plays
   guessPartial:null,guessUsed:[],guessUsedCount:0,guessSel:null,guessMax:0,
   guessTarget:null,guessList:[],guessResult:null,guessShownAt:0,
@@ -696,9 +738,149 @@ const boardEl=$('board'),statusEl=$('status'),panelEl=$('panel'),
       overlay=$('overlay'),ovmsg=$('ovmsg'),foot=$('foot'),segEl=$('seg'),
       histModal=$('histmodal'),histBody=$('histbody'),replayBar=$('replaybar');
 
+/* ── i18n (EN default + BG) and theme (standard default + light) ──────────────
+   English values are kept verbatim where the test-suite asserts on them.
+   Functions interpolate; strings used inside innerHTML may carry HTML entities. */
+const I18N={
+  en:{
+    sub_backgammon:'standard · hit to the bar', sub_gulbara:'same direction · blocks', sub_tapa:'pin to trap · no bar',
+    restart:'↺ Restart', undo:'↶ Undo', bearoff:'Bear off ›', flip:'⇅ Flip',
+    history:'History', auto:'▶ Auto', stop:'■ Stop',
+    language:'Language', theme:'Theme', themeStandard:'Standard', themeLight:'Light',
+    speed:'Speed', stats:'Stats', hint:'Hint', guess:'Guess',
+    playAgain:'Play again', explore:'↩ Explore',
+    youName:'You', white:'White', black:'Black', ai:'AI',
+    possYour:'Your', possWhite:'White’s', possBlack:'Black’s',
+    gameHistory:'Game History', replay:'▶ Replay', rewind:'↩ Rewind',
+    handoffColon:'hand-off:', nonePlayable:'(none playable)', noPlay:'(no play)',
+    stalledHandoff:' · stalled → hand-off', stalledShort:' · stalled', noCompletedTurns:'No completed turns yet.', currentGame:'Current game',
+    gameN:n=>'Game '+n, partialSuffix:' (partial)', branchTo:n=>'Branch → T.'+n,
+    branchedMsg:n=>'Branched from turn '+n+'. Same dice, new choices.',
+    replayTurnInfo:(a,b,extra)=>'Turn '+a+' / '+b+extra, handoffWord:'hand-off', suggested:'Suggested',
+    pgNewGame:'New game', pgChoose:title=>title+' · choose your checkers',
+    pgRollFirst:'Roll for first move', pgHigherOpens:y=>'Higher total opens · you play '+y,
+    pgYou:'You', pgVs:'vs', pgAiSuffix:n=>n+' (AI)', pgTapRoll:'tap your dice to roll',
+    pgTie:'Tie — tap to roll again.', pgGoFirst:(w,a,b)=>w+' go first — '+a+'-'+b+'.',
+    stNewGame:'New game', stRollFirst:'roll for first move', stChooseSide:'choose your side',
+    stGuessMove:n=>'Guess '+n+'’s move', stGuessTap:'tap pieces, then Reveal',
+    spotOn:'Spot on!', halfRight:'Half right', missed:'Missed', youGuessedN:n=>'you guessed '+n+'/2',
+    stReplay:(a,b)=>'Replay turn '+a+' of '+b,
+    youWin:'You win', whiteWins:'White wins', blackWins:'Black wins', drawWord:'Draw',
+    isThinking:'is thinking…', watch:'WATCH',
+    stTurnRoll:who=>who+' turn — tap the board to roll',
+    noLegalMove:'No legal move', tapContinue:' — tap board to continue.',
+    stHandoff:(who,left)=>who+' hand-off — play leftover '+left+', then roll',
+    stDoubles:(who,v)=>who+' doubles run '+v+'-'+v+' → play '+v+'…6',
+    stRoll:(who,a,b,dbl)=>who+' roll: '+a+'-'+b+(dbl?' (×4)':''),
+    aiMoveNote:(a,b,note)=>'AI '+a+'-'+b+': '+note,
+    tapToRoll:'TAP TO ROLL', runLabel:v=>'RUN '+v+'→6', handoffLabel:'HAND-OFF',
+    leftWord:n=>n+' left', reveal:'Reveal ▶', guessedN:n=>n+'/2 guessed',
+    pipWho:name=>name+' &middot; pip', leadingBy:n=>'leading by '+n, levelWord:'level',
+    enterWord:'enter', danceWord:'dance', onBarChip:(name,n)=>name+' on bar ×'+n,
+    pinYou:n=>'You pinned <b>'+n+'</b> ⊗', pinBy:(name,n)=>'Pinned by '+name+' <b>'+n+'</b> ⊗',
+    threatsToYou:'Threats to you', yourCap:w=>'Your '+w, hitWord:'hits', pinWord:'pins',
+    anyPct:p=>' &middot; any '+p+'%', noneExposed:'None exposed.',
+    yourBlot:'your blot', aiBlot:'AI blot', yourChecker:'your checker', aiChecker:'AI checker',
+    ptShort:'pt', control:'Control (blocks)', stacks2:n=>n+' 2+ stacks', borneRecent:'Borne off &middot; recent',
+    youWord:'You', wShort:'W', bShort:'B', blkShort:'Blk',
+    sfxTurnRoll:' turn — tap the board to roll',
+    sfxHandoff:left=>' hand-off — play leftover <b>'+left+'</b>, then roll',
+    sfxDoubles:v=>' doubles run <b>'+v+'-'+v+'</b> → play '+v+'…6',
+    sfxRoll:(a,b,dbl)=>' roll: <b>&nbsp;'+a+'-'+b+'</b>'+(dbl?' (×4)':''),
+    branchBadge:n=>'Branch T.'+n,
+    footReplay:'Replay — ◄► step, ↩ Rewind to branch. Each branch gets the same dice as the original game.',
+    footStatsOff:'Tap a checker, then a highlighted point. Stats are off.',
+    footGulbara:'Гюлбара: counter-clockwise, single checker blocks. From your 4th roll, doubles run up to 6-6; what you can’t finish hands off to your opponent.',
+    footTapa:'Тапа: land on a lone enemy to PIN it (⊗). Numbers = exact chance that checker is pinned next roll.',
+    footBackgammon:'Numbers on checker = exact chance that blot is hit next roll (yours red, AI teal). Small dim numbers = threat on empty points.',
+    gammon:'gammon', mars:'марс',
+    handoverMsg:(opp,left)=>opp+' couldn’t finish its doubles — play the leftover '+left+', then roll.'
+  },
+  bg:{
+    sub_backgammon:'стандарт · удар към бара', sub_gulbara:'обща посока · блокове', sub_tapa:'клавал · без бар',
+    restart:'↺ Рестарт', undo:'↶ Отмени', bearoff:'Изнеси ›', flip:'⇅ Обърни',
+    history:'История', auto:'▶ Авто', stop:'■ Стоп',
+    language:'Език', theme:'Тема', themeStandard:'Стандартна', themeLight:'Светла',
+    speed:'Скорост', stats:'Статистика', hint:'Подсказка', guess:'Познай',
+    playAgain:'Нова игра', explore:'↩ Разгледай',
+    youName:'Ти', white:'Бялото', black:'Черното', ai:'ИИ',
+    possYour:'Твой', possWhite:'на Бялото', possBlack:'на Черното',
+    gameHistory:'История на играта', replay:'▶ Повтори', rewind:'↩ Назад',
+    handoffColon:'трансфер:', nonePlayable:'(няма ход)', noPlay:'(без ход)',
+    stalledHandoff:' · спрян → трансфер', stalledShort:' · спрян', noCompletedTurns:'Още няма завършени ходове.', currentGame:'Текуща игра',
+    gameN:n=>'Игра '+n, partialSuffix:' (частична)', branchTo:n=>'Разклонение → Х.'+n,
+    branchedMsg:n=>'Разклонение от ход '+n+'. Същите зарове, нов избор.',
+    replayTurnInfo:(a,b,extra)=>'Ход '+a+' / '+b+extra, handoffWord:'трансфер', suggested:'Препоръка',
+    pgNewGame:'Нова игра', pgChoose:title=>title+' · избери пулове',
+    pgRollFirst:'Хвърли за първи ход', pgHigherOpens:y=>'По-голямата сума започва · играеш с '+y,
+    pgYou:'Ти', pgVs:'срещу', pgAiSuffix:n=>n+' (ИИ)', pgTapRoll:'докосни заровете за хвърляне',
+    pgTie:'Равно — докосни за ново хвърляне.', pgGoFirst:(w,a,b)=>w+' започва — '+a+'-'+b+'.',
+    stNewGame:'Нова игра', stRollFirst:'хвърли за първи ход', stChooseSide:'избери страна',
+    stGuessMove:n=>'Познай хода на '+n, stGuessTap:'докосни пуловете, после Покажи',
+    spotOn:'Точно!', halfRight:'Наполовина', missed:'Грешка', youGuessedN:n=>'позна '+n+'/2',
+    stReplay:(a,b)=>'Повторение, ход '+a+' от '+b,
+    youWin:'Ти печелиш', whiteWins:'Бялото печели', blackWins:'Черното печели', drawWord:'Реми',
+    isThinking:'мисли…', watch:'ГЛЕДАЙ',
+    stTurnRoll:who=>who+' ред — докосни дъската за хвърляне',
+    noLegalMove:'Няма легален ход', tapContinue:' — докосни дъската за продължение.',
+    stHandoff:(who,left)=>who+' трансфер — изиграй остатъка '+left+', после хвърли',
+    stDoubles:(who,v)=>who+' дубъл '+v+'-'+v+' → играй '+v+'…6',
+    stRoll:(who,a,b,dbl)=>who+' зар: '+a+'-'+b+(dbl?' (×4)':''),
+    aiMoveNote:(a,b,note)=>'ИИ '+a+'-'+b+': '+note,
+    tapToRoll:'ДОКОСНИ ЗА ХВЪРЛЯНЕ', runLabel:v=>'СЕРИЯ '+v+'→6', handoffLabel:'ТРАНСФЕР',
+    leftWord:n=>'остават '+n, reveal:'Покажи ▶', guessedN:n=>n+'/2 познати',
+    pipWho:name=>name+' &middot; пип', leadingBy:n=>'води с '+n, levelWord:'наравно',
+    enterWord:'влиза', danceWord:'танцува', onBarChip:(name,n)=>name+' на бара ×'+n,
+    pinYou:n=>'Закова <b>'+n+'</b> ⊗', pinBy:(name,n)=>'Закован от '+name+' <b>'+n+'</b> ⊗',
+    threatsToYou:'Заплахи към теб', yourCap:w=>'Твои '+w, hitWord:'удари', pinWord:'клавали',
+    anyPct:p=>' &middot; общо '+p+'%', noneExposed:'Няма открити.',
+    yourBlot:'твой блот', aiBlot:'блот на ИИ', yourChecker:'твой пул', aiChecker:'пул на ИИ',
+    ptShort:'т.', control:'Контрол (блокове)', stacks2:n=>n+' 2+ купчини', borneRecent:'Изнесени &middot; последни',
+    youWord:'Ти', wShort:'Б', bShort:'Ч', blkShort:'Ч',
+    sfxTurnRoll:' ред — докосни дъската за хвърляне',
+    sfxHandoff:left=>' трансфер — изиграй остатъка <b>'+left+'</b>, после хвърли',
+    sfxDoubles:v=>' дубъл <b>'+v+'-'+v+'</b> → играй '+v+'…6',
+    sfxRoll:(a,b,dbl)=>' зар: <b>&nbsp;'+a+'-'+b+'</b>'+(dbl?' (×4)':''),
+    branchBadge:n=>'Разклонение Х.'+n,
+    footReplay:'Повторение — ◄► стъпка, ↩ Назад за разклонение. Всяко разклонение получава същите зарове като оригинала.',
+    footStatsOff:'Докосни пул, после осветена точка. Статистиката е изключена.',
+    footGulbara:'Гюлбара: обратно на часовниковата, един пул блокира. От 4-тото хвърляне дублите вървят до 6-6; което не довършиш, се прехвърля на противника.',
+    footTapa:'Тапа: стъпи върху самотен враг, за да го заковеш (⊗). Числата = точен шанс пулът да бъде закован следващото хвърляне.',
+    footBackgammon:'Числа върху пул = точен шанс блотът да бъде ударен следващото хвърляне (твоите червени, ИИ тюркоаз). Малки бледи числа = заплаха върху празни точки.',
+    gammon:'гамон', mars:'марс',
+    handoverMsg:(opp,left)=>opp+' не довърши дублите си — изиграй остатъка '+left+', после хвърли.'
+  }
+};
+function t(k,...a){const d=I18N[G.lang]||I18N.en;let v=(d&&d[k]!==undefined)?d[k]:I18N.en[k];if(typeof v==='function')return v(...a);return v===undefined?k:v;}
+function qsa(sel){try{return (typeof document!=='undefined'&&document.querySelectorAll)?document.querySelectorAll(sel):[];}catch(e){return[];}}
+const whoName=p=>p===G.human?t('youName'):(p===W?t('white'):t('black'));   // actor name, perspective-aware
+const whoPoss=p=>p===G.human?t('possYour'):(p===W?t('possWhite'):t('possBlack')); // possessive
+function applyTheme(){
+  if(typeof document!=='undefined'&&document.body)document.body.classList.toggle('light',G.theme==='light');
+  for(const b of qsa('#themeseg button'))b.classList.toggle('on',b.dataset.theme===G.theme);
+}
+function applyLang(){
+  if(typeof document!=='undefined'&&document.documentElement)document.documentElement.lang=G.lang;
+  for(const el of qsa('[data-i18n]')){const v=t(el.dataset.i18n);if(v!==undefined)el.textContent=v;}
+  for(const b of qsa('#langseg button'))b.classList.toggle('on',b.dataset.lang===G.lang);
+  const sub=$('sub');if(sub)sub.textContent=t('sub_'+G.variant);
+  const wb=$('watchbtn');if(wb)wb.textContent=G.spectate?t('stop'):t('auto');
+}
+function savePrefs(){try{if(typeof localStorage!=='undefined'){localStorage.setItem('tabla_lang',G.lang);localStorage.setItem('tabla_theme',G.theme);}}catch(e){}}
+function loadPrefs(){try{if(typeof localStorage!=='undefined'){const l=localStorage.getItem('tabla_lang');if(l==='en'||l==='bg')G.lang=l;const th=localStorage.getItem('tabla_theme');if(th==='standard'||th==='light')G.theme=th;}}catch(e){}}
+
+/* Board SVG palette per theme (page chrome is CSS-var driven; the board is drawn as an SVG string) */
+const BOARD_PAL={
+  standard:{outer:'#0a100d',frameStroke:'rgba(201,162,109,.30)',felt:'#16201b',feltStroke:'rgba(0,0,0,.45)',
+    bar:'#0d1411',barStroke:'rgba(201,162,109,.18)',ptL1:'#bd9a64',ptL2:'#8f7245',ptD1:'#2a3a30',ptD2:'#1d2a23',num:'#c9a26d'},
+  light:{outer:'#cdb98c',frameStroke:'rgba(120,92,46,.42)',felt:'#e7d8b0',feltStroke:'rgba(120,92,46,.30)',
+    bar:'#dcc999',barStroke:'rgba(120,92,46,.32)',ptL1:'#dcc488',ptL2:'#c1a460',ptD1:'#a3906a',ptD2:'#897650',num:'#6f5a30'}
+};
+const BPAL=()=>BOARD_PAL[G.theme]||BOARD_PAL.standard;
+
 const boardNum=i=>G.flipped?(24-i):(i+1);
 function boardNote(moves){
-  if(!moves||!moves.length) return '(no play)';
+  if(!moves||!moves.length) return t('noPlay');
   return moves.map(m=>{
     const s=m.from==='bar'?'bar':boardNum(m.from);
     const d=m.off?'off':boardNum(m.to);
@@ -765,10 +947,10 @@ function setupBoard(v){
   G.spectate=false;G.replayMode=false;G.branchFrom=null;
   G.rollSeq={w:[],k:[]};G.nextRoll={w:0,k:0};
   G.turnLog=[];G.savedGames=[];G.histViewGame=0;
-  $('watchbtn').textContent='▶ Auto';
+  $('watchbtn').textContent=t('auto');
   overlay.classList.add('hidden');closeHistModal();closeReplay();
   $('histbtn').disabled=true;
-  $('title').textContent=VAR[G.variant].title;$('sub').textContent=VAR[G.variant].sub;
+  $('title').textContent=VAR[G.variant].title;$('sub').textContent=t('sub_'+G.variant);
   for(const btn of segEl.querySelectorAll('button'))
     btn.classList.toggle('on',btn.dataset.v===G.variant);
 }
@@ -811,25 +993,25 @@ function renderPregame(){
   $('pregame').classList.remove('hidden');
   const card=$('pgcard');let h='';
   if(pg.step==='color'){
-    h='<div class="pgtitle">New game</div><div class="pgsub">'+VAR[G.variant].title+' · choose your checkers</div>'
+    h='<div class="pgtitle">'+t('pgNewGame')+'</div><div class="pgsub">'+t('pgChoose',VAR[G.variant].title)+'</div>'
      +'<div class="pgcolors">'
-     +'<div class="pgcolor" data-color="w"><div class="pgdisc w"></div><div class="lbl">White</div></div>'
-     +'<div class="pgcolor" data-color="k"><div class="pgdisc k"></div><div class="lbl">Black</div></div>'
+     +'<div class="pgcolor" data-color="w"><div class="pgdisc w"></div><div class="lbl">'+t('white')+'</div></div>'
+     +'<div class="pgcolor" data-color="k"><div class="pgdisc k"></div><div class="lbl">'+t('black')+'</div></div>'
      +'</div>';
   }else{
-    const youName=G.human===W?'White':'Black',aiName=G.ai===W?'White':'Black';
+    const youName=G.human===W?t('white'):t('black'),aiName=G.ai===W?t('white'):t('black');
     const pair=arr=>pgDie(arr[0])+pgDie(arr[1]);
     let mineCell;
     if(pg.rolling){const f=pg.mineFace||[1,1];mineCell='<div class="pgpair">'+pair(f)+'</div>';}
     else if(pg.mine){mineCell='<div class="pgpair">'+pair(pg.mine)+'</div>';}
     else{mineCell='<div class="pgpair pgtap" id="pgrollzone"><div class="pgempty">🎲</div><div class="pgempty">🎲</div></div>';}
     const aiCell='<div class="pgpair">'+(pg.ai?pair(pg.ai):'')+'</div>';
-    h='<div class="pgtitle">Roll for first move</div><div class="pgsub">Higher total opens · you play '+youName+'</div>'
+    h='<div class="pgtitle">'+t('pgRollFirst')+'</div><div class="pgsub">'+t('pgHigherOpens',youName)+'</div>'
      +'<div class="pgmsg">'+(pg.msg||'')+'</div>'
-     +'<div class="pgroll"><div class="pgcol"><div class="pgwho">You</div>'+mineCell+'</div>'
-     +'<div class="pgvs">vs</div>'
-     +'<div class="pgcol"><div class="pgwho">'+aiName+' (AI)</div>'+aiCell+'</div></div>'
-     +(pg.mine||pg.rolling?'':'<div class="pgtaphint">tap your dice to roll</div>');
+     +'<div class="pgroll"><div class="pgcol"><div class="pgwho">'+t('pgYou')+'</div>'+mineCell+'</div>'
+     +'<div class="pgvs">'+t('pgVs')+'</div>'
+     +'<div class="pgcol"><div class="pgwho">'+t('pgAiSuffix',aiName)+'</div>'+aiCell+'</div></div>'
+     +(pg.mine||pg.rolling?'':'<div class="pgtaphint">'+t('pgTapRoll')+'</div>');
   }
   card.innerHTML=h;
   if(pg.step==='color'){for(const el of card.querySelectorAll('[data-color]'))el.addEventListener('click',()=>chooseColor(el.dataset.color));}
@@ -849,9 +1031,9 @@ function rollHuman(){
     if(Date.now()-t0>=dur){
       clearInterval(iv);pg.rolling=false;pg.mine=[r6(),r6()];
       const ms=pg.mine[0]+pg.mine[1],as=pg.ai[0]+pg.ai[1];
-      if(ms===as){pg.ai=[d6(),d6()];pg.mine=null;pg.msg='Tie — tap to roll again.';renderPregame();return;}
+      if(ms===as){pg.ai=[d6(),d6()];pg.mine=null;pg.msg=t('pgTie');renderPregame();return;}
       const humanFirst=ms>as,starter=humanFirst?G.human:G.ai,openDice=(humanFirst?pg.mine:pg.ai).slice();
-      pg.msg=(humanFirst?'You':'AI')+' go first — '+openDice[0]+'-'+openDice[1]+'.';renderPregame();
+      pg.msg=t('pgGoFirst',(humanFirst?t('pgYou'):t('ai')),openDice[0],openDice[1]);renderPregame();
       setTimeout(()=>startGame(G.human,starter,openDice),760);
     }
   },70);
@@ -924,7 +1106,7 @@ function beginHandover(){
     G.phase='move';
     G.hintSeq=G.hintOn?aiDiceSeq(clone(cur()),G.human,G.used.slice()):null;
     const s=sources();if(s.length===1)G.sel=s[0];
-    G.msg='Black couldn’t finish its doubles — play the leftover '+ho.dice.join(',')+', then roll.';
+    G.msg=t('handoverMsg',whoName(G.ai),ho.dice.join(','));
     render();
   }else{G.phase='ai';G.msg='';render();setTimeout(aiPlay,G.spectate?700:580);}
 }
@@ -1107,13 +1289,14 @@ function endGame(){
   const mars=w&&(w===W?(G.board.off.k===0):(G.board.off.w===0));
   // Save completed game; do NOT overwrite savedGames (preserves original + prior branches)
   const gameLabel=G.branchFrom!==null
-    ?'Branch → T.'+(G.branchFrom+1)
-    :'Game '+(G.savedGames.length+1);
+    ?t('branchTo',(G.branchFrom+1))
+    :t('gameN',(G.savedGames.length+1));
   G.savedGames.push({label:gameLabel,turnLog:G.turnLog.slice(),branchFrom:G.branchFrom});
   G.histViewGame=G.savedGames.length-1;
   G.msg='';render();
-  const term=G.variant==='backgammon'?'gammon':'марс';
-  const msg=w?((w===G.human?'You win':(w===W?'White wins':'Black wins'))+(mars?' — '+term+'!':'!')):'Draw!';
+  const term=G.variant==='backgammon'?t('gammon'):t('mars');
+  const winName=w===G.human?t('youWin'):(w===W?t('whiteWins'):t('blackWins'));
+  const msg=w?(winName+(mars?' — '+term+'!':'!')):t('drawWord')+'!';
   ovmsg.textContent=msg;
   overlay.classList.remove('hidden');
 }
@@ -1143,7 +1326,7 @@ function branchFromLog(sourceLog,n){
   G.spectate=false;G.cascade=false;G.log=[];
   overlay.classList.add('hidden');closeHistModal();closeReplay();
   $('histbtn').disabled=false;
-  G.msg='Branched from turn '+(n+1)+'. Same dice, new choices.';
+  G.msg=t('branchedMsg',(n+1));
   render();beginTurn();
 }
 // Legacy/test entry — branch from a saved game by index
@@ -1159,7 +1342,7 @@ function doRewind(viewable,vIdx,n){
   if(g.live){
     let liveLog=G.turnLog.slice();
     if(liveLog.length&&liveLog[liveLog.length-1].boardAfter===null) liveLog=liveLog.slice(0,-1);
-    G.savedGames.push({label:'Game '+(G.savedGames.length+1)+' (partial)',turnLog:liveLog,branchFrom:G.branchFrom});
+    G.savedGames.push({label:t('gameN',(G.savedGames.length+1))+t('partialSuffix'),turnLog:liveLog,branchFrom:G.branchFrom});
     sourceLog=liveLog;
   }else{
     sourceLog=G.savedGames[vIdx].turnLog;
@@ -1172,7 +1355,7 @@ function openHistModal(gameIdx){
   if(G.replayMode)closeReplay();
   const midGame=!G.gameOver&&G.turnLog.length>0;
   let viewable=G.savedGames.map(g=>({label:g.label,turnLog:g.turnLog,live:false}));
-  if(midGame) viewable.push({label:'Current game',turnLog:G.turnLog,live:true});
+  if(midGame) viewable.push({label:t('currentGame'),turnLog:G.turnLog,live:true});
   if(!viewable.length)return;
   const idx=(gameIdx!==undefined&&gameIdx>=0&&gameIdx<viewable.length)?gameIdx:viewable.length-1;
   G.histViewGame=idx;
@@ -1182,7 +1365,7 @@ function openHistModal(gameIdx){
 function closeHistModal(){histModal.classList.add('hidden');}
 function renderHistModal(viewable,idx){
   const game=viewable[idx];
-  $('histtitle').textContent=game.label||'History';
+  $('histtitle').textContent=game.label||t('gameHistory');
   let html='';
   // Game selector tabs (if more than one game)
   if(viewable.length>1){
@@ -1199,34 +1382,34 @@ function renderHistModal(viewable,idx){
     if(game.live&&entry.boardAfter===null) return; // current in-progress turn: skip
     shown++;
     const isW=entry.turn===W;
-    const ColLetter=isW?'W':'B';
+    const ColLetter=isW?t('wShort'):t('bShort');
     const tlabel=entry.handover?'↪':('T'+(isW?(++wt):(++kt)));
     const pipYou=(entry.pipW||0),pipBlk=(entry.pipK||0);
     if(entry.handover){                            // transferred-dice hand-off
-      const hnote=entry.moves&&entry.moves.length?boardNote(entry.moves):'(none playable)';
+      const hnote=entry.moves&&entry.moves.length?boardNote(entry.moves):t('nonePlayable');
       html+='<div class="histrow '+(isW?'mine':'theirs')+'" style="opacity:.82">'
         +'<span class="hn">'+tlabel+'</span>'
         +'<span class="hwho" style="color:'+(isW?'#e2a857':'#5fb9a7')+'">'+ColLetter+'</span>'
         +'<span class="hdice" style="color:var(--gold)">↪'+(entry.handoverDice||[]).join(',')+'</span>'
-        +'<span class="hmoves"><i style="color:var(--muted)">hand-off:</i> '+hnote+'</span>'
+        +'<span class="hmoves"><i style="color:var(--muted)">'+t('handoffColon')+'</i> '+hnote+'</span>'
         +'<span class="hpips">⚪ '+pipYou+'&nbsp;·&nbsp;⚫ '+pipBlk+'</span>'
         +'</div>';
       return;
     }
     const rollStr=entry.dice[0]+'-'+entry.dice[1];
     const note=entry.moves&&entry.moves.length
-      ?boardNote(entry.moves)+(entry.stopped?' · stalled → hand-off':'')
-      :'(no play)';
+      ?boardNote(entry.moves)+(entry.stopped?t('stalledHandoff'):'')
+      :t('noPlay');
     html+='<div class="histrow '+(isW?'mine':'theirs')+'">'
       +'<span class="hn">'+tlabel+'</span>'
       +'<span class="hwho" style="color:'+(isW?'#e2a857':'#5fb9a7')+'">'+ColLetter+'</span>'
       +'<span class="hdice">'+rollStr+'</span>'
       +'<span class="hmoves">'+note+'</span>'
       +'<span class="hpips">⚪ '+pipYou+'&nbsp;·&nbsp;⚫ '+pipBlk+'</span>'
-      +'<button class="hrew" data-rew="'+idx+'" data-n="'+i+'">↩ Rewind</button>'
+      +'<button class="hrew" data-rew="'+idx+'" data-n="'+i+'">'+t('rewind')+'</button>'
       +'</div>';
   });
-  if(!shown) html+='<div style="padding:20px;color:var(--muted);text-align:center">No completed turns yet.</div>';
+  if(!shown) html+='<div style="padding:20px;color:var(--muted);text-align:center">'+t('noCompletedTurns')+'</div>';
   histBody.innerHTML=html;
   // Tab listeners
   for(const btn of histBody.querySelectorAll('[data-tab]'))
@@ -1259,8 +1442,8 @@ function stepReplay(delta){
   if(G.replayStep<0) G.board=clone(log[0].boardBefore);
   else G.board=clone(log[G.replayStep].boardAfter||log[G.replayStep].boardBefore);
   const e=log[G.replayStep];
-  $('rinfo').textContent='Turn '+(G.replayStep+1)+' / '+log.length+(e
-    ?' · '+(e.turn===G.human?'You':(e.turn===W?'White':'Black'))+' '+(e.handover?'hand-off':e.dice.join('-')):'');
+  $('rinfo').textContent=t('replayTurnInfo',(G.replayStep+1),log.length,(e
+    ?' · '+whoName(e.turn)+' '+(e.handover?t('handoffWord'):e.dice.join('-')):''));
   $('rprev').disabled=G.replayStep<0;
   $('rnext').disabled=G.replayStep>=log.length-1;
   render();
@@ -1324,7 +1507,7 @@ $('flipbtn').addEventListener('click',()=>{
 });
 $('watchbtn').addEventListener('click',()=>{
   G.spectate=!G.spectate;
-  $('watchbtn').textContent=G.spectate?'■ Stop':'▶ Auto';
+  $('watchbtn').textContent=G.spectate?t('stop'):t('auto');
   if(!G.spectate){render();return;}                       // Stop: keep current partial; player continues manually
   if(G.gameOver||G.replayMode||G.turn!==G.human){render();return;}
   G.sel=null;G.rolling=false;G.rollFaces=null;
@@ -1342,6 +1525,20 @@ $('replaybtn').addEventListener('click',openReplay);
 $('rclose').addEventListener('click',closeReplay);
 $('rprev').addEventListener('click',()=>stepReplay(-1));
 $('rnext').addEventListener('click',()=>stepReplay(1));
+// ── Settings menu (hamburger): language, theme, speed, toggles ──
+function setLang(l){if((l==='en'||l==='bg')&&l!==G.lang){G.lang=l;applyLang();render();savePrefs();}}
+function setTheme(th){if((th==='standard'||th==='light')&&th!==G.theme){G.theme=th;applyTheme();savePrefs();}}
+(function wireMenu(){
+  const mb=$('menubtn'),mp=$('menupanel');
+  const closeMenu=()=>{G.menuOpen=false;if(mp)mp.classList.add('hidden');if(mb)mb.classList.remove('active');};
+  if(mb&&mp){
+    mb.addEventListener('click',e=>{e.stopPropagation();G.menuOpen=!G.menuOpen;mp.classList.toggle('hidden',!G.menuOpen);mb.classList.toggle('active',G.menuOpen);});
+    mp.addEventListener('click',e=>e.stopPropagation());
+    if(document.addEventListener)document.addEventListener('click',e=>{if(G.menuOpen&&!(e.target&&e.target.closest&&e.target.closest('.menuwrap')))closeMenu();});
+  }
+  const ls=$('langseg');if(ls)ls.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-lang]');if(b)setLang(b.dataset.lang);});
+  const ts=$('themeseg');if(ts)ts.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-theme]');if(b)setTheme(b.dataset.theme);});
+})();
 
 // ── Rendering helpers ─────────────────────────────────────────────
 function diePips(v,dx,dy,S,pipColr){
@@ -1408,23 +1605,23 @@ function render(){
     +'<radialGradient id="gI" cx="38%" cy="32%" r="78%"><stop offset="0%" stop-color="#f6ead0"/><stop offset="60%" stop-color="#e6d6ad"/><stop offset="100%" stop-color="#c6ad7f"/></radialGradient>'
     +'<radialGradient id="gK" cx="38%" cy="32%" r="80%"><stop offset="0%" stop-color="#45534d"/><stop offset="62%" stop-color="#2c3833"/><stop offset="100%" stop-color="#19211e"/></radialGradient>'
     +'<linearGradient id="gDie" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3ead7"/><stop offset="100%" stop-color="#d8caab"/></linearGradient>'
-    +'<linearGradient id="ptL" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bd9a64"/><stop offset="100%" stop-color="#8f7245"/></linearGradient>'
-    +'<linearGradient id="ptD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a30"/><stop offset="100%" stop-color="#1d2a23"/></linearGradient>'
+    +'<linearGradient id="ptL" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+BPAL().ptL1+'"/><stop offset="100%" stop-color="'+BPAL().ptL2+'"/></linearGradient>'
+    +'<linearGradient id="ptD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+BPAL().ptD1+'"/><stop offset="100%" stop-color="'+BPAL().ptD2+'"/></linearGradient>'
     +'<filter id="sh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2.5" stdDeviation="2.2" flood-color="#000" flood-opacity="0.45"/></filter>'
     +'<filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#e2a857" flood-opacity="0.9"/></filter>'
     +'</defs>';
-  s+='<rect x="4" y="4" width="992" height="712" rx="18" fill="#0a100d" stroke="rgba(201,162,109,.30)" stroke-width="1.5"/>';
-  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="#16201b"/>';
-  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="2"/>';
+  s+='<rect x="4" y="4" width="992" height="712" rx="18" fill="'+BPAL().outer+'" stroke="'+BPAL().frameStroke+'" stroke-width="1.5"/>';
+  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="'+BPAL().felt+'"/>';
+  s+='<rect x="14" y="14" width="972" height="692" rx="9" fill="none" stroke="'+BPAL().feltStroke+'" stroke-width="2"/>';
   for(let i=0;i<24;i++){
     const{x,top}=slot(i);const light=((vcol(i)+(top?0:1))%2===0);const half=PW/2-3;
     const pts=top?(x-half).toFixed(1)+',38 '+(x+half).toFixed(1)+',38 '+x.toFixed(1)+',314'
                :(x-half).toFixed(1)+',682 '+(x+half).toFixed(1)+',682 '+x.toFixed(1)+',406';
     s+='<polygon points="'+pts+'" fill="url(#'+(light?'ptL':'ptD')+')" opacity="0.96"/>';
   }
-  s+='<rect x="472" y="14" width="56" height="692" fill="#0d1411" stroke="rgba(201,162,109,.18)" stroke-width="1"/>';
+  s+='<rect x="472" y="14" width="56" height="692" fill="'+BPAL().bar+'" stroke="'+BPAL().barStroke+'" stroke-width="1"/>';
   for(let i=0;i<24;i++){
-    const{x,top}=slot(i);let col='#c9a26d',op=0.45;
+    const{x,top}=slot(i);let col=BPAL().num,op=0.45;
     if(i>=0&&i<=5){col='#e2a857';op=0.80;}
     if(i>=aHlo&&i<=aHhi){col='#5fb9a7';op=0.75;}
     s+='<text x="'+x.toFixed(1)+'" y="'+(top?27:702)+'" text-anchor="middle" font-size="17" font-weight="600" fill="'+col+'" opacity="'+op+'" font-family="-apple-system,sans-serif">'+(G.flipped?(24-i):(i+1))+'</text>';
@@ -1490,7 +1687,7 @@ function render(){
       const cy=top?TOPY(bk+ownCount(disp,G.ai,m.to)):BOTY(bk+ownCount(disp,G.ai,m.to));
       s+='<circle cx="'+x.toFixed(1)+'" cy="'+cy+'" r="27" fill="rgba(201,162,109,.14)" stroke="#c9a26d" stroke-width="2.5" stroke-dasharray="4 4"/>';
     }
-    s+='<g data-action="guessrev"><rect data-action="guessrev" x="430" y="410" width="140" height="30" rx="8" fill="rgba(201,162,109,0.16)" stroke="#c9a26d" stroke-width="1.5"/><text x="500" y="430" text-anchor="middle" font-size="13" font-weight="700" fill="#c9a26d" font-family="-apple-system,sans-serif" style="pointer-events:none">Reveal ▶</text></g>';
+    s+='<g data-action="guessrev"><rect data-action="guessrev" x="430" y="410" width="140" height="30" rx="8" fill="rgba(201,162,109,0.16)" stroke="#c9a26d" stroke-width="1.5"/><text x="500" y="430" text-anchor="middle" font-size="13" font-weight="700" fill="#c9a26d" font-family="-apple-system,sans-serif" style="pointer-events:none">'+t('reveal')+'</text></g>';
   }
   const colr=G.turn===W?'#e2a857':'#5fb9a7';
   const dbl=isDbl(),diceColr=dbl?pairBorder(G.dice[0]):colr;
@@ -1500,20 +1697,20 @@ function render(){
     const sc=G.guessResult==null?0:G.guessResult;
     const icon=sc>=2?'💘':(sc>=1?'❤️':'💔');
     s+='<text x="500" y="362" text-anchor="middle" font-size="54">'+icon+'</text>';
-    s+='<text x="500" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">'+sc+'/2 guessed</text>';
+    s+='<text x="500" y="404" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">'+t('guessedN',sc)+'</text>';
   }else if(G.phase==='roll'){
     if(G.rolling){
       const f=G.rollFaces||[1,1];const S=52,gap=16,tot=2*S+gap,x0=500-tot/2;
       s+=die(f[0],x0,334,colr,false);s+=die(f[1],x0+S+gap,334,colr,false);
     }else{
       s+='<text x="500" y="352" text-anchor="middle" font-size="46">🎲</text>';
-      s+='<text x="500" y="395" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">TAP TO ROLL</text>';
+      s+='<text x="500" y="395" text-anchor="middle" font-size="13" font-weight="700" fill="'+colr+'" font-family="-apple-system,sans-serif">'+t('tapToRoll')+'</text>';
     }
   }else if(G.cascade){
     s+=pz(die(G.used.length?G.used[0]:(G.handover?(G.cascadeList[0]||1):G.dice[0]),474,334,dbl?diceColr:colr,false,null,dbl?pairPip(G.dice[0]):null,dbl?8:undefined));
-    const lab=G.handover?'HAND-OFF':('RUN '+G.dice[0]+'→6');
+    const lab=G.handover?t('handoffLabel'):t('runLabel',G.dice[0]);
     s+='<text x="500" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="'+diceColr+'" font-family="-apple-system,sans-serif">'+lab+'</text>';
-    s+='<text x="500" y="403" text-anchor="middle" font-size="13" fill="#8ba095" font-family="-apple-system,sans-serif">'+(G.handover?G.used.join(',')+' left':G.used.length+' left')+'</text>';
+    s+='<text x="500" y="403" text-anchor="middle" font-size="13" fill="#8ba095" font-family="-apple-system,sans-serif">'+t('leftWord',(G.handover?G.used.join(','):G.used.length))+'</text>';
   }else{
     // Persistent: show the full roll; consumed dice dimmed. During a guess, show the AI's full roll.
     const full=diceListOf(G.dice);let rem,consumed=[];
@@ -1529,41 +1726,41 @@ function render(){
   boardEl.innerHTML=s;
 
   // Status
-  const tn=G.turn===G.human?'Your':(G.turn===W?'White’s':'Black’s');
+  const tn=whoPoss(G.turn);
   let st='';
   if(G.phase==='pregame'){
-    st='<b>New game</b> — '+(G.pregame&&G.pregame.step==='rolloff'?'roll for first move':'choose your side');
+    st='<b>'+t('stNewGame')+'</b> — '+(G.pregame&&G.pregame.step==='rolloff'?t('stRollFirst'):t('stChooseSide'));
   }else if(G.phase==='guess'){
-    const cn=G.ai===W?'White':'Black';
-    st='<span class="dot '+G.ai+'"></span><b>Guess '+cn+'’s move</b> — '+G.guessUsedCount+'/'+G.guessMax+' · tap pieces, then Reveal';
+    const cn=whoName(G.ai);
+    st='<span class="dot '+G.ai+'"></span><b>'+t('stGuessMove',cn)+'</b> — '+G.guessUsedCount+'/'+G.guessMax+' · '+t('stGuessTap');
   }else if(G.phase==='guessrev'){
     const sc=G.guessResult==null?0:G.guessResult;
-    st='<span class="dot '+G.ai+'"></span><b>'+(sc>=2?'Spot on!':sc>=1?'Half right':'Missed')+'</b> — you guessed '+sc+'/2';
+    st='<span class="dot '+G.ai+'"></span><b>'+(sc>=2?t('spotOn'):sc>=1?t('halfRight'):t('missed'))+'</b> — '+t('youGuessedN',sc);
   }else if(G.replayMode){
     const log=(G.savedGames[G.histViewGame]||{turnLog:G.turnLog}).turnLog;
-    st='<span class="dot '+(log[G.replayStep]?.turn||'w')+'"></span><b>Replay</b> turn '+(G.replayStep+1)+' of '+log.length;
+    st='<span class="dot '+(log[G.replayStep]?.turn||'w')+'"></span><b>'+t('stReplay',(G.replayStep+1),log.length)+'</b>';
   }else if(G.gameOver){
     const w=winner(G.board);
-    st='<span class="dot '+(w||'w')+'"></span><b>'+(w?(w===G.human?'You win':(w===W?'White wins':'Black wins')):'Draw')+'</b>';
+    st='<span class="dot '+(w||'w')+'"></span><b>'+(w?(w===G.human?t('youWin'):(w===W?t('whiteWins'):t('blackWins'))):t('drawWord'))+'</b>';
   }else if(G.phase==='ai'){
-    st='<span class="dot '+G.turn+'"></span><b>'+(G.turn===W?'White':'Black')+'</b> is thinking…'+(G.spectate?' <span style="color:var(--gold);font-size:11px">WATCH</span>':'');
+    st='<span class="dot '+G.turn+'"></span><b>'+whoName(G.turn)+'</b> '+t('isThinking')+(G.spectate?' <span style="color:var(--gold);font-size:11px">'+t('watch')+'</span>':'');
   }else if(G.phase==='roll'){
-    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> turn — tap the board to roll';
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b>'+t('sfxTurnRoll');
   }else if(G.phase==='pass'){
-    st='<span class="dot w"></span><b>No legal move</b> — tap board to continue.';
+    st='<span class="dot w"></span><b>'+t('noLegalMove')+'</b>'+t('tapContinue');
   }else if(G.handover){
-    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> hand-off — play leftover <b>'+G.used.join(',')+'</b>, then roll';
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b>'+t('sfxHandoff',G.used.join(','));
   }else if(G.cascade){
-    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> doubles run <b>'+G.dice[0]+'-'+G.dice[0]+'</b> → play '+G.dice[0]+'…6';
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b>'+t('sfxDoubles',G.dice[0]);
   }else{
-    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b> roll: <b>&nbsp;'+G.dice[0]+'-'+G.dice[1]+'</b>'+(G.dice[0]===G.dice[1]?' (\xd74)':'');
+    st='<span class="dot '+G.turn+'"></span><b>'+tn+'</b>'+t('sfxRoll',G.dice[0],G.dice[1],G.dice[0]===G.dice[1]);
   }
   if(G.aiLastRoll&&G.aiLastMoves&&G.turn===G.human&&!G.gameOver&&!G.spectate&&!G.replayMode){
     const note=boardNote(G.aiLastMoves.slice(0,4))+(G.aiLastMoves.length>4?'…':'');
-    st+='&nbsp;·&nbsp;<span style="color:#5fb9a7;font-size:12px">AI '+G.aiLastRoll[0]+'-'+G.aiLastRoll[1]+': '+note+'</span>';
+    st+='&nbsp;·&nbsp;<span style="color:#5fb9a7;font-size:12px">'+t('aiMoveNote',G.aiLastRoll[0],G.aiLastRoll[1],note)+'</span>';
   }
   if(G.branchFrom!==null&&!G.replayMode&&!G.gameOver)
-    st+='&nbsp;<span class="branchbadge">Branch T.'+(G.branchFrom+1)+'</span>';
+    st+='&nbsp;<span class="branchbadge">'+t('branchBadge',(G.branchFrom+1))+'</span>';
   if(G.msg) st+='&nbsp;·&nbsp;'+G.msg;
   statusEl.innerHTML=st;
 
@@ -1575,45 +1772,45 @@ function render(){
   if(G.hintOn&&G.turn===G.human&&(G.phase==='move')&&!G.replayMode&&G.hintSeq&&G.hintSeq.moves.length){
     hintEl.classList.remove('hidden');
     const ms=G.hintSeq.moves;const cap=ms.length>6?ms.slice(0,6):ms;
-    hintEl.innerHTML='<span class="lab">Suggested</span><span class="mv">'+boardNote(cap)+(ms.length>6?'…':'')+'</span>';
+    hintEl.innerHTML='<span class="lab">'+t('suggested')+'</span><span class="mv">'+boardNote(cap)+(ms.length>6?'…':'')+'</span>';
   }else hintEl.classList.add('hidden');
   pipEl.classList.add('hidden');
 
   renderPanel(disp);
-  foot.textContent=G.replayMode?'Replay — ◄► step, ↩ Rewind to branch. Each branch gets the same dice as the original game.':
-    !G.statsOn?'Tap a checker, then a highlighted point. Stats are off.':
-    G.variant==='gulbara'?'Гюлбара: counter-clockwise, single checker blocks. From your 4th roll, doubles run up to 6-6; what you can’t finish hands off to your opponent.':
-    G.variant==='tapa'?"Тапа: land on a lone enemy to PIN it (⊗). Numbers = exact chance that checker is pinned next roll.":
-    'Numbers on checker = exact chance that blot is hit next roll (yours red, AI teal). Small dim numbers = threat on empty points.';
+  foot.textContent=G.replayMode?t('footReplay'):
+    !G.statsOn?t('footStatsOff'):
+    G.variant==='gulbara'?t('footGulbara'):
+    G.variant==='tapa'?t('footTapa'):
+    t('footBackgammon');
 }
 
 // ── Panel ─────────────────────────────────────────────────────────
 function pctBar(prob){const p=Math.round(prob*100);return '<div class="bar"><i style="width:'+Math.max(4,p)+'%"></i></div><span class="pct">'+p+'%</span>';}
 function blotRows(disp,hc,mine,variant){
   const rows=[];const cls=mine?'red':'teal';
-  const noun=variant==='tapa'?(mine?'your checker':'AI checker'):(mine?'your blot':'AI blot');
+  const noun=variant==='tapa'?(mine?t('yourChecker'):t('aiChecker')):(mine?t('yourBlot'):t('aiBlot'));
   for(const i of hc.blots.slice().sort((a,b)=>hc.perBlot[b]-hc.perBlot[a])){
-    rows.push('<div class="row '+cls+'"><span class="pt">'+noun+' <small>· pt '+boardNum(i)+'</small></span>'+pctBar(hc.perBlot[i])+'</div>');
+    rows.push('<div class="row '+cls+'"><span class="pt">'+noun+' <small>· '+t('ptShort')+' '+boardNum(i)+'</small></span>'+pctBar(hc.perBlot[i])+'</div>');
   }
-  return rows.length?rows.join(''):'<div class="none">None exposed.</div>';
+  return rows.length?rows.join(''):'<div class="none">'+t('noneExposed')+'</div>';
 }
 function renderPanel(disp){
   if(!G.statsOn){panelEl.innerHTML='';return;}
-  const me=G.human,foe=G.ai,foeName=(foe===W?'White':'Black');
+  const me=G.human,foe=G.ai,foeName=whoName(foe);
   const pw=pip(disp,me),pk=pip(disp,foe);
-  const leadW=pw<pk?'leading by '+(pk-pw):'level';
-  const leadK=pk<pw?'leading by '+(pw-pk):'';
+  const leadW=pw<pk?t('leadingBy',(pk-pw)):t('levelWord');
+  const leadK=pk<pw?t('leadingBy',(pw-pk)):'';
   let html='<div class="card"><div class="pips">'
-    +'<div class="pip you"><div class="who">You &middot; pip</div><div class="val">'+pw+'</div><div class="lead">'+(leadW||'&nbsp;')+'</div></div>'
+    +'<div class="pip you"><div class="who">'+t('pipWho',t('youWord'))+'</div><div class="val">'+pw+'</div><div class="lead">'+(leadW||'&nbsp;')+'</div></div>'
     +'<div class="pipdiv"></div>'
-    +'<div class="pip ai"><div class="who">'+foeName+' &middot; pip</div><div class="val">'+pk+'</div><div class="lead">'+(leadK||'&nbsp;')+'</div></div>'
+    +'<div class="pip ai"><div class="who">'+t('pipWho',foeName)+'</div><div class="val">'+pk+'</div><div class="lead">'+(leadK||'&nbsp;')+'</div></div>'
     +'</div>';
   if(G.variant==='backgammon'){
     const esW=entryStats(disp,me),esK=entryStats(disp,foe);
     if(esW||esK){
       html+='<div class="entry">';
-      if(esW)html+='<span class="chip">You on bar \xd7'+esW.onBar+'</span><span>enter <b>'+Math.round(esW.enterPct*100)+'%</b></span><span>&middot; dance <b>'+Math.round(esW.dancePct*100)+'%</b></span>';
-      if(esK)html+='<span class="chip">'+foeName+' on bar \xd7'+esK.onBar+'</span><span>enter <b>'+Math.round(esK.enterPct*100)+'%</b></span><span>&middot; dance <b>'+Math.round(esK.dancePct*100)+'%</b></span>';
+      if(esW)html+='<span class="chip">'+t('onBarChip',t('youWord'),esW.onBar)+'</span><span>'+t('enterWord')+' <b>'+Math.round(esW.enterPct*100)+'%</b></span><span>&middot; '+t('danceWord')+' <b>'+Math.round(esW.dancePct*100)+'%</b></span>';
+      if(esK)html+='<span class="chip">'+t('onBarChip',foeName,esK.onBar)+'</span><span>'+t('enterWord')+' <b>'+Math.round(esK.enterPct*100)+'%</b></span><span>&middot; '+t('danceWord')+' <b>'+Math.round(esK.dancePct*100)+'%</b></span>';
       html+='</div>';
     }
   }
@@ -1622,40 +1819,43 @@ function renderPanel(disp){
     for(let i=0;i<24;i++){if(disp.pinned[i]===foe)pm++;if(disp.pinned[i]===me)pai++;}
     if(pm||pai){
       html+='<div class="entry">';
-      if(pm)html+='<span class="chip" style="color:#e2a857">You pinned <b>'+pm+'</b> ⊗</span>';
-      if(pai)html+='<span class="chip" style="color:#e8714e">Pinned by '+foeName+' <b>'+pai+'</b> ⊗</span>';
+      if(pm)html+='<span class="chip" style="color:#e2a857">'+t('pinYou',pm)+'</span>';
+      if(pai)html+='<span class="chip" style="color:#e8714e">'+t('pinBy',foeName,pai)+'</span>';
       html+='</div>';
     }
   }
   html+='</div>';
   if(G.variant!=='gulbara'){
     const hcW=hitChances(disp,me),hcK=hitChances(disp,foe);
-    const cap=G.variant==='tapa'?'pin':'hit';
+    const cap=G.variant==='tapa'?t('pinWord'):t('hitWord');
     html+='<div class="twocol">'
-      +'<div class="card"><div class="secthead">Threats to you'+(hcK.blots.length?' &middot; any '+Math.round(hcK.anyCount/36*100)+'%':'')+'</div>'+blotRows(disp,hcK,true,G.variant)+'</div>'
-      +'<div class="card"><div class="secthead">Your '+cap+'s'+(hcW.blots.length?' &middot; any '+Math.round(hcW.anyCount/36*100)+'%':'')+'</div>'+blotRows(disp,hcW,false,G.variant)+'</div>'
+      +'<div class="card"><div class="secthead">'+t('threatsToYou')+(hcK.blots.length?t('anyPct',Math.round(hcK.anyCount/36*100)):'')+'</div>'+blotRows(disp,hcK,true,G.variant)+'</div>'
+      +'<div class="card"><div class="secthead">'+t('yourCap',cap)+(hcW.blots.length?t('anyPct',Math.round(hcW.anyCount/36*100)):'')+'</div>'+blotRows(disp,hcW,false,G.variant)+'</div>'
       +'</div>';
   }else{
     let mpW=0,mpK=0,spW=0,spK=0;
     for(let i=0;i<24;i++){if(ownCount(disp,me,i)>=2)mpW++;if(ownCount(disp,foe,i)>=2)mpK++;if(ownCount(disp,me,i)>=1)spW++;if(ownCount(disp,foe,i)>=1)spK++;}
-    html+='<div class="card"><div class="secthead">Control (blocks)</div><div class="pips">'
-      +'<div class="pip you"><div class="who">You</div><div class="val">'+spW+'</div><div class="lead">'+mpW+' 2+ stacks</div></div>'
+    html+='<div class="card"><div class="secthead">'+t('control')+'</div><div class="pips">'
+      +'<div class="pip you"><div class="who">'+t('youWord')+'</div><div class="val">'+spW+'</div><div class="lead">'+t('stacks2',mpW)+'</div></div>'
       +'<div class="pipdiv"></div>'
-      +'<div class="pip ai"><div class="who">'+foeName+'</div><div class="val">'+spK+'</div><div class="lead">'+mpK+' 2+ stacks</div></div>'
+      +'<div class="pip ai"><div class="who">'+foeName+'</div><div class="val">'+spK+'</div><div class="lead">'+t('stacks2',mpK)+'</div></div>'
       +'</div></div>';
   }
   const last=G.log.slice(0,3).map(l=>{
-    const note=l.moves&&l.moves.length?boardNote(l.moves)+(l.stopped?' · stalled':''):(l.handover?'—':'(no play)');
+    const note=l.moves&&l.moves.length?boardNote(l.moves)+(l.stopped?t('stalledShort'):''):(l.handover?'—':t('noPlay'));
     const rs=l.handover?'<span style="color:var(--gold)">↪</span> ':(l.roll?'<span style="opacity:.65">'+l.roll[0]+'-'+l.roll[1]+':</span> ':'');
-    return '<span class="chip"><b style="color:'+(l.who===W?'#e2a857':'#5fb9a7')+'">'+(l.who===G.human?'You':(l.who===W?'W':'Blk'))+'</b> '+rs+note+'</span>';
+    return '<span class="chip"><b style="color:'+(l.who===W?'#e2a857':'#5fb9a7')+'">'+(l.who===G.human?t('youWord'):(l.who===W?t('wShort'):t('blkShort')))+'</b> '+rs+note+'</span>';
   }).join(' ');
-  html+='<div class="card"><div class="secthead">Borne off &middot; recent</div><div class="entry flat">'
-    +'<span class="chip">You <b>'+disp.off[me]+'</b>/15</span>'
+  html+='<div class="card"><div class="secthead">'+t('borneRecent')+'</div><div class="entry flat">'
+    +'<span class="chip">'+t('youWord')+' <b>'+disp.off[me]+'</b>/15</span>'
     +'<span class="chip">'+foeName+' <b>'+disp.off[foe]+'</b>/15</span>'
     +(last?'<span style="flex-basis:100%;height:0"></span>'+last:'')
     +'</div></div>';
   panelEl.innerHTML=html;
 }
 
-window.addEventListener('load',()=>openPregame('backgammon'));
+function init(){loadPrefs();applyTheme();applyLang();
+  const sr=$('aiSpeedRange');if(sr){sr.value=String(G.aiSpeed);const sv=$('spdval');if(sv)sv.textContent=(G.aiSpeed/1000).toFixed(1)+'s';}
+  openPregame('backgammon');}
+window.addEventListener('load',init);
 </script></body></html>
